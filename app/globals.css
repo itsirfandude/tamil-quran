@@ -1,0 +1,237 @@
+@import "tailwindcss";
+
+/* ---------- Theme tokens ---------- */
+/* Family: lapis blue + gold leaf on parchment (light themes), true OLED */
+/* black + refined champagne gold (dark) — a jewellery-case palette rather */
+/* than a screen-glow one: black reserved for real ink, gold used sparingly. */
+
+:root,
+[data-theme="classic"] {
+  --bg: #f2ecdc;
+  --bg-card: #fbf8ef;
+  --bg-raised: #ffffff;
+  --text: #2a2118;
+  --text-muted: #6b5f4e;
+  --accent: #2b4c7e;
+  --accent-2: #b8923b;
+  --border: #dcd0b2;
+  --selection: #e4d9b0;
+  --ring: #b8923b;
+  --card-shadow: 0 1px 2px rgba(42, 33, 24, 0.04);
+  --card-shadow-hover: 0 10px 24px -8px rgba(42, 33, 24, 0.16);
+  --raised-shadow: 0 20px 48px -16px rgba(42, 33, 24, 0.28);
+}
+
+/* OLED Black — true #000 background, champagne gold accent, hairline */
+/* borders instead of filled cards so black stays black between them. */
+[data-theme="dark"] {
+  --bg: #000000;
+  --bg-card: #0a0a0a;
+  --bg-raised: #121212;
+  --text: #ece7dc;
+  --text-muted: #8a8378;
+  --accent: #d9bb78;
+  --accent-2: #c7a75c;
+  --border: rgba(255, 255, 255, 0.09);
+  --selection: rgba(217, 187, 120, 0.22);
+  --ring: #d9bb78;
+  --card-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 12px 32px -16px rgba(0, 0, 0, 0.9);
+  --card-shadow-hover: inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 20px 48px -16px rgba(217, 187, 120, 0.1);
+  --raised-shadow: 0 24px 64px -12px rgba(0, 0, 0, 0.9);
+}
+
+[data-theme="sepia"] {
+  --bg: #ebdcc0;
+  --bg-card: #f3e9d2;
+  --bg-raised: #f8f1e0;
+  --text: #3b2a1a;
+  --text-muted: #7a6446;
+  --accent: #8b4a2b;
+  --accent-2: #5c7a52;
+  --border: #d6c09a;
+  --selection: #d9b98a;
+  --ring: #8b4a2b;
+  --card-shadow: 0 1px 2px rgba(59, 42, 26, 0.05);
+  --card-shadow-hover: 0 10px 24px -8px rgba(59, 42, 26, 0.18);
+  --raised-shadow: 0 20px 48px -16px rgba(59, 42, 26, 0.3);
+}
+
+[data-theme="night-blue"] {
+  --bg: #060d1c;
+  --bg-card: #0c1730;
+  --bg-raised: #10204a;
+  --text: #dce6f5;
+  --text-muted: #8296b8;
+  --accent: #c9a24b;
+  --accent-2: #6ea3e0;
+  --border: rgba(198, 216, 245, 0.1);
+  --selection: rgba(110, 163, 224, 0.22);
+  --ring: #c9a24b;
+  --card-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03),
+    0 12px 32px -16px rgba(0, 0, 0, 0.75);
+  --card-shadow-hover: inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 20px 48px -16px rgba(110, 163, 224, 0.16);
+  --raised-shadow: 0 24px 64px -12px rgba(0, 0, 0, 0.8);
+}
+
+[data-theme="emerald"] {
+  --bg: #06130e;
+  --bg-card: #0d1f17;
+  --bg-raised: #11291f;
+  --text: #e4efe8;
+  --text-muted: #83a190;
+  --accent: #d6b65a;
+  --accent-2: #57a67d;
+  --border: rgba(214, 239, 224, 0.09);
+  --selection: rgba(87, 166, 125, 0.22);
+  --ring: #d6b65a;
+  --card-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03),
+    0 12px 32px -16px rgba(0, 0, 0, 0.8);
+  --card-shadow-hover: inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 20px 48px -16px rgba(87, 166, 125, 0.14);
+  --raised-shadow: 0 24px 64px -12px rgba(0, 0, 0, 0.8);
+}
+
+[data-theme="contrast"] {
+  --bg: #000000;
+  --bg-card: #000000;
+  --bg-raised: #0a0a0a;
+  --text: #ffffff;
+  --text-muted: #e0e0e0;
+  --accent: #ffd400;
+  --accent-2: #66d9ff;
+  --border: #ffffff;
+  --selection: #333300;
+  --ring: #ffd400;
+  --card-shadow: none;
+  --card-shadow-hover: none;
+  --raised-shadow: none;
+}
+
+@theme inline {
+  --font-display: var(--font-display), serif;
+  --font-ui: var(--font-ui), sans-serif;
+  --font-tamil: var(--font-tamil), serif;
+  --font-arabic: var(--font-arabic), serif;
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui), sans-serif;
+  min-height: 100%;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+::selection {
+  background: var(--selection);
+}
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+.font-tamil-text {
+  font-family: var(--font-tamil), serif;
+  font-size: var(--tamil-size, 21px);
+  line-height: var(--tamil-leading, 1.9);
+}
+
+.font-arabic-text {
+  font-family: var(--font-arabic), serif;
+  font-size: var(--arabic-size, 30px);
+  line-height: var(--arabic-leading, 2.1);
+  direction: rtl;
+}
+
+/* Shared surface classes so every card/panel picks up the theme's shadow */
+/* and hover elevation consistently, without repeating box-shadow inline. */
+.ink-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  box-shadow: var(--card-shadow);
+  transition: box-shadow 0.25s ease, border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+a.ink-card:hover,
+button.ink-card:hover {
+  box-shadow: var(--card-shadow-hover);
+  border-color: var(--accent-2);
+}
+
+.ink-raised {
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  box-shadow: var(--raised-shadow);
+}
+
+/* Verse medallion: a slim ring marking each ayah number, echoing the */
+/* decorative verse-end roundels used in Quran manuscripts — refined to */
+/* a hairline on dark surfaces so it reads as jewellery, not a button. */
+.verse-medallion {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.7em;
+  height: 1.7em;
+  padding: 0 0.35em;
+  border-radius: 999px;
+  border: 1px solid var(--accent-2);
+  color: var(--accent-2);
+  font-family: var(--font-ui), sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.gold-rule {
+  height: 1px;
+  width: 64px;
+  margin: 0 auto;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--accent-2),
+    transparent
+  );
+}
+
+.paper-texture {
+  background-image: radial-gradient(var(--border) 0.5px, transparent 0.5px);
+  background-size: 14px 14px;
+  opacity: 0.35;
+}
+
+[data-theme="dark"] .paper-texture,
+[data-theme="night-blue"] .paper-texture,
+[data-theme="emerald"] .paper-texture,
+[data-theme="contrast"] .paper-texture {
+  opacity: 0.5;
+}
