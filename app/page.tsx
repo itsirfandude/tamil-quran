@@ -2,6 +2,7 @@ import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 import { ContinueReading } from "@/components/ContinueReading";
 import { SurahGrid } from "@/components/SurahGrid";
+import { TamilWithNotes } from "@/components/TamilWithNotes";
 import { getSurah, getSurahIndex } from "@/lib/data";
 
 export const revalidate = 86400;
@@ -81,7 +82,7 @@ export default async function HomePage() {
                   {dailyGroup.arabic}
                 </p>
                 <p className="font-tamil-text mb-3" style={{ fontSize: "18px", color: "var(--text)" }}>
-                  {dailyGroup.tamil}
+                  <TamilWithNotes text={dailyGroup.tamil} />
                 </p>
                 <p className="text-xs" style={{ color: "var(--text-muted)" }}>
                   {dailySurah.name_tamil} · {dailySurah.number}:{dailyGroup.verses.join(",")}
