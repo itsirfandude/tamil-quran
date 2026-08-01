@@ -47,7 +47,7 @@ export default async function SurahPage({
     <>
       <SiteHeader />
       <main id="main" className="flex-1 py-8 sm:py-10">
-        <ReadingWidthWrapper>
+        <ReadingWidthWrapper widen>
           <div className="mb-8 text-center">
             <p className="text-xs uppercase tracking-wider mb-2" style={{ color: "var(--accent-2)" }}>
               அத்தியாயம் {surah.number}
@@ -61,7 +61,9 @@ export default async function SurahPage({
           </div>
 
           <SurahIntro introduction={surah.introduction} />
+        </ReadingWidthWrapper>
 
+        <ReadingWidthWrapper>
           {surah.number !== 9 && (
             <p
               className="font-arabic-text text-center mb-10"
@@ -90,7 +92,7 @@ export default async function SurahPage({
           >
             {prev ? (
               <Link
-                href={`/surah/${prev.number}#1`}
+                href={`/surah/${prev.number}`}
                 className="text-sm flex-1"
                 style={{ color: "var(--accent-2)" }}
               >
@@ -101,7 +103,7 @@ export default async function SurahPage({
             )}
             {next ? (
               <Link
-                href={`/surah/${next.number}#1`}
+                href={`/surah/${next.number}`}
                 className="text-sm flex-1 text-right"
                 style={{ color: "var(--accent-2)" }}
               >

@@ -13,7 +13,7 @@ export function ContinueReading({
   if (!progress) {
     return (
       <Link
-        href="/surah/1#1"
+        href="/surah/1"
         className="ink-card group flex items-center justify-between rounded-2xl p-6 sm:p-7 hover:-translate-y-0.5"
       >
         <div>

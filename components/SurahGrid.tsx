@@ -7,7 +7,7 @@ export function SurahGrid({ surahs }: { surahs: SurahMeta[] }) {
       {surahs.map((s) => (
         <Link
           key={s.number}
-          href={`/surah/${s.number}#1`}
+          href={`/surah/${s.number}`}
           className="ink-card flex items-center gap-4 rounded-xl px-4 py-3.5"
         >
           <span

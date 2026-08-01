@@ -20,7 +20,14 @@ export function SurahIntro({ introduction }: { introduction: SurahIntroduction }
     shouldCollapse && !expanded ? paragraphs.slice(0, 1) : paragraphs;
 
   return (
-    <div className="mb-10">
+    <div className="mb-14">
+      <p
+        className="text-xs tracking-wide text-center mb-3"
+        style={{ color: "var(--text-muted)" }}
+      >
+        அறிமுகம்
+      </p>
+
       {name_meaning && (
         <p
           className="font-tamil-text text-center mb-4"
@@ -31,10 +38,7 @@ export function SurahIntro({ introduction }: { introduction: SurahIntroduction }
       )}
 
       {paragraphs.length > 0 && (
-        <div
-          className="mx-auto max-w-xl border-t pt-5"
-          style={{ borderColor: "var(--border)" }}
-        >
+        <div className="border-t pt-5" style={{ borderColor: "var(--border)" }}>
           <div className="space-y-3">
             {visibleParagraphs.map((p, i) => (
               <p
