@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { SiteHeader } from "@/components/SiteHeader";
 import { AyahCard } from "@/components/AyahCard";
+import { SurahIntro } from "@/components/SurahIntro";
 import { ReaderProgressTracker } from "@/components/ReaderProgressTracker";
 import { ReadingWidthWrapper } from "@/components/ReadingWidthWrapper";
 import { getSurah, getSurahIndex, TOTAL_SURAHS } from "@/lib/data";
@@ -58,6 +59,8 @@ export default async function SurahPage({
               {surah.stated_total_verses} வசனங்கள்
             </p>
           </div>
+
+          <SurahIntro introduction={surah.introduction} />
 
           {surah.number !== 9 && (
             <p

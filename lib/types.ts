@@ -16,10 +16,16 @@ export interface IntroSection {
   paragraphs: string[];
 }
 
+export interface SurahIntroduction {
+  name_meaning: string | null;
+  paragraphs: string[];
+}
+
 export interface Surah {
   number: number;
   name_tamil: string;
   stated_total_verses: number | null;
+  introduction: SurahIntroduction;
   ayah_groups: AyahGroup[];
 }
 
