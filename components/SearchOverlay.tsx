@@ -2,21 +2,23 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import type { SearchEntry, Surah } from "@/lib/types";
+import type { VerseResult, SearchResult } from "@/lib/search";
+import {
+  parseVerseReference,
+  fetchVerseReference,
+  type ResolvedVerseReference,
+} from "@/lib/reference-search";
 
-const NOTE_MARKER = /\u00a4(\d+)\u00a4/g;
-
-interface ReferenceResult {
+interface SurahJumpResult {
   href: string;
   label: string;
-  preview?: string;
 }
 
 export function SearchOverlay({ onClose }: { onClose: () => void }) {
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState<SearchEntry[]>([]);
+  const [results, setResults] = useState<VerseResult[]>([]);
   const [loading, setLoading] = useState(false);
-  const [reference, setReference] = useState<ReferenceResult | null>(null);
+  const [reference, setReference] = useState<ResolvedVerseReference | null>(null);
   const [referenceLoading, setReferenceLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -27,9 +29,7 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
   const trimmed = query.trim();
 
   const bareSurah = /^(\d{1,3})$/.exec(trimmed);
-  const verseRef = /^(\d{1,3})\s*[:.]\s*(\d{1,3})(?:\s*-\s*\d{1,3})?$/.exec(
-    trimmed
-  );
+  const verseRef = parseVerseReference(trimmed);
 
   const bareSurahValid =
     bareSurah && Number(bareSurah[1]) >= 1 && Number(bareSurah[1]) <= 114
@@ -58,8 +58,8 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
           if (!r.ok) throw new Error("Search failed");
           return r.json();
         })
-        .then((data: SearchEntry[]) => {
-          setResults(data);
+        .then((data: SearchResult[]) => {
+          setResults(data.filter((r): r is VerseResult => r.type === "verse"));
           setLoading(false);
         })
         .catch((error: unknown) => {
@@ -82,9 +82,7 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
       setReferenceLoading(false);
       return;
     }
-    const surahNum = Number(verseRef[1]);
-    const verseNum = Number(verseRef[2]);
-    if (surahNum < 1 || surahNum > 114) {
+    if (verseRef.surah < 1 || verseRef.surah > 114) {
       setReference(null);
       setReferenceLoading(false);
       return;
@@ -94,28 +92,9 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
     setReferenceLoading(true);
     setReference(null);
 
-    fetch(`/data/surah/${surahNum}.json`, { signal: controller.signal })
-      .then((r) => {
-        if (!r.ok) throw new Error("Surah fetch failed");
-        return r.json();
-      })
-      .then((surah: Surah) => {
-        const match = surah.ayah_groups.find((g) =>
-          g.verses.includes(verseNum)
-        );
-        if (match) {
-          const verseLabel =
-            match.verses.length > 1
-              ? `${match.verses[0]}-${match.verses[match.verses.length - 1]}`
-              : `${match.verses[0]}`;
-          setReference({
-            href: `/surah/${surahNum}#${match.verses[0]}`,
-            label: `${surahNum}:${verseLabel}`,
-            preview: match.tamil.replace(NOTE_MARKER, ""),
-          });
-        } else {
-          setReference(null);
-        }
+    fetchVerseReference(verseRef, { signal: controller.signal })
+      .then((resolved) => {
+        setReference(resolved);
         setReferenceLoading(false);
       })
       .catch((error: unknown) => {
@@ -125,7 +104,7 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
       });
 
     return () => controller.abort();
-  }, [verseRef?.[0]]);
+  }, [verseRef?.surah, verseRef?.verse]);
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -135,7 +114,7 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
 
-  const bareSurahResult: ReferenceResult | null = bareSurahValid
+  const bareSurahResult: SurahJumpResult | null = bareSurahValid
     ? { href: `/surah/${bareSurahValid}`, label: `Surah ${bareSurahValid}` }
     : null;
 
@@ -157,7 +136,7 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
             ref={inputRef}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="தமிழில் தேடுங்கள் அல்லது 2:183 எனத் தேடுங்கள்... (search Tamil, or try 2:183)"
+            placeholder="தமிழில் தேடுங்கள் அல்லது 2:183 எனத் தேடுங்கள்..."
             className="flex-1 bg-transparent outline-none font-tamil-text text-base"
             style={{ color: "var(--text)", fontSize: "17px" }}
             aria-label="Search Tamil translation"
@@ -169,6 +148,29 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
           >
             Esc
           </button>
+        </div>
+        
+                
+
+        <div
+          className="px-4 py-2 border-b flex justify-between items-center"
+          style={{ borderColor: "var(--border)" }}
+        >
+          <span
+            className="text-xs"
+            style={{ color: "var(--text-muted)" }}
+          >
+            Need more than quick search?
+          </span>
+
+          <Link
+            href="/search"
+            onClick={onClose}
+            className="text-sm font-medium hover:underline"
+            style={{ color: "var(--accent-2)" }}
+          >
+              மேம்பட்ட தேடல் →
+          </Link>
         </div>
 
         <div className="max-h-[60vh] overflow-y-auto">
@@ -211,7 +213,7 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
 
           {verseRef && !referenceLoading && !reference && (
             <p className="p-6 text-sm" style={{ color: "var(--text-muted)" }}>
-              No verse {verseRef[2]} found in Surah {verseRef[1]}.
+              No verse {verseRef.verse} found in Surah {verseRef.surah}.
             </p>
           )}
 
@@ -243,36 +245,29 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
           )}
           <ul>
             {results.map((r) => {
-              const idx = r.tamil.indexOf(trimmed);
-              const before = r.tamil.slice(Math.max(0, idx - 40), idx);
-              const match = r.tamil.slice(idx, idx + trimmed.length);
-              const after = r.tamil.slice(
-                idx + trimmed.length,
-                idx + trimmed.length + 60
-              );
-              const verseLabel =
-                r.verses.length > 1
-                  ? `${r.verses[0]}-${r.verses[r.verses.length - 1]}`
-                  : `${r.verses[0]}`;
+              const idx = r.snippet.toLowerCase().indexOf(trimmed.toLowerCase());
+              const before = idx === -1 ? r.snippet : r.snippet.slice(0, idx);
+              const match = idx === -1 ? "" : r.snippet.slice(idx, idx + trimmed.length);
+              const after = idx === -1 ? "" : r.snippet.slice(idx + trimmed.length);
               return (
                 <li key={`${r.surah}-${r.verses.join("-")}`}>
                   <Link
-                    href={`/surah/${r.surah}#${r.verses[0]}`}
+                    href={r.href}
                     onClick={onClose}
                     className="block px-4 py-3 border-b hover:bg-black/5 transition-colors"
                     style={{ borderColor: "var(--border)" }}
                   >
                     <div className="text-xs mb-1" style={{ color: "var(--accent-2)" }}>
-                      {r.surah}:{verseLabel}
+                      {r.label}
                     </div>
                     <p className="font-tamil-text text-sm leading-relaxed" style={{ color: "var(--text)" }}>
-                      {idx > 0 && "…"}
                       {before}
-                      <mark style={{ background: "var(--selection)", color: "var(--text)" }}>
-                        {match}
-                      </mark>
+                      {match && (
+                        <mark style={{ background: "var(--selection)", color: "var(--text)" }}>
+                          {match}
+                        </mark>
+                      )}
                       {after}
-                      {idx + trimmed.length + 60 < r.tamil.length && "…"}
                     </p>
                   </Link>
                 </li>
