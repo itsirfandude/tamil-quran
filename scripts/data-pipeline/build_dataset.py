@@ -28,8 +28,8 @@ arabic_totals = {s['id']: s['total_verses'] for s in arabic}
 # and 475) with no space either side - handled as its own alternative so
 # both numbers are captured as separate references.
 footnote_re = re.compile(
-    r'(?<=[\u0B80-\u0BFF.,!?\'")])(\d{1,4})\s?&\s?(\d{1,4})(?=[\s.,!?\'")]|$)'
-    r'|(?<=[\u0B80-\u0BFF.,!?\'")])(\d{1,4})(?=[\s.,!?\'")]|$)'
+    r'(?<=[\u0B80-\u0BFF.,!?;\'")])(\d{1,4})\s?&\s?(\d{1,4})(?=[\s.,!?;\'")]|$)'
+    r'|(?<=[\u0B80-\u0BFF.,!?;\'")])(\d{1,4})(?=[\s.,!?;\'")]|$)'
 )
 
 VALID_NOTE_MAX = 521

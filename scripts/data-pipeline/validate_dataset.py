@@ -29,10 +29,10 @@ total_pattern = re.compile(r'(மொத்த|மாத்த)\s*வசனங்
 
 # --- independent footnote detector: two separate passes, not one regex ---
 PAIR_RE = re.compile(
-    r'(?<=[\u0B80-\u0BFF.,!?\'")])(\d{1,4})\s?&\s?(\d{1,4})(?=[\s.,!?\'")]|$)'
+    r'(?<=[\u0B80-\u0BFF.,!?;\'")])(\d{1,4})\s?&\s?(\d{1,4})(?=[\s.,!?;\'")]|$)'
 )
 SINGLE_RE = re.compile(
-    r'(?<=[\u0B80-\u0BFF.,!?\'")])(\d{1,4})(?=[\s.,!?\'")]|$)'
+    r'(?<=[\u0B80-\u0BFF.,!?;\'")])(\d{1,4})(?=[\s.,!?;\'")]|$)'
 )
 
 def independent_extract_notes(raw_verse_text):
