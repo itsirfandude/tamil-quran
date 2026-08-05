@@ -46,16 +46,58 @@ export default async function HomePage() {
             >
               بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ
             </p>
-            <h1
-              className="font-tamil-text mx-auto max-w-2xl"
-              style={{ fontSize: "clamp(22px, 4vw, 30px)", lineHeight: 1.5, color: "var(--text)" }}
-            >
-              திருக்குர்ஆனை தமிழில் தெளிவாகவும், துல்லியமாகவும் வாசியுங்கள்
-            </h1>
-            <p className="mt-3 text-sm" style={{ color: "var(--text-muted)" }}>
-              Arabic text alongside an exact Tamil translation, verse by verse.
-            </p>
-            <div className="gold-rule mt-8" />
+          <h1
+  className="font-tamil-text mx-auto max-w-2xl"
+  style={{
+    fontSize: "clamp(24px, 4vw, 32px)",
+    lineHeight: 1.5,
+    color: "var(--text)",
+  }}
+>
+  திருக்குர்ஆனை தமிழில்
+  <br />
+  தெளிவாகவும் துல்லியமாகவும்
+  <br />
+  படியுங்கள்
+</h1>
+
+<p
+  className="mt-5 font-tamil-text"
+  style={{
+    color: "var(--text-muted)",
+    fontSize: "17px",
+    lineHeight: 1.8,
+  }}
+>
+  மூலத்தின் தூய்மை மாறாமல், அன்றாட வாசிப்பிற்காக வடிவமைக்கப்பட்டது.
+</p>
+
+<div
+  className="mt-8 flex flex-wrap items-center justify-center gap-3 text-sm font-tamil-text"
+  style={{ color: "var(--text-muted)" }}
+>
+ <span>அரபி மூலத்துடன்</span>
+
+<span
+  aria-hidden="true"
+  style={{ color: "var(--border)" }}
+>
+  |
+</span>
+
+<span>வசனம் வாரியாக</span>
+
+<span
+  aria-hidden="true"
+  style={{ color: "var(--border)" }}
+>
+  |
+</span>
+
+<span>521 விளக்கக் குறிப்புகளுடன்</span>
+</div>
+
+<div className="gold-rule mt-8" />
           </div>
         </section>
 
@@ -63,33 +105,33 @@ export default async function HomePage() {
           <ContinueReading surahNames={surahNames} />
 
           {dailyGroup && dailySurah && (
-            <section aria-labelledby="daily-ayah-heading">
-              <h2
-                id="daily-ayah-heading"
-                className="text-xs uppercase tracking-wider mb-3"
-                style={{ color: "var(--accent-2)" }}
-              >
-                இன்றைய வசனம் · Verse of the day
-              </h2>
-              <Link
-                href={`/surah/${dailySurah.number}#${dailyGroup.verses[0]}`}
-                className="ink-card block rounded-2xl p-6 sm:p-8 hover:-translate-y-0.5"
-              >
-                <p
-                  className="font-arabic-text text-right mb-4"
-                  style={{ fontSize: "24px", color: "var(--text)" }}
-                >
-                  {dailyGroup.arabic}
-                </p>
-                <p className="font-tamil-text mb-3" style={{ fontSize: "18px", color: "var(--text)" }}>
-                  <TamilWithNotes text={dailyGroup.tamil} />
-                </p>
-                <p className="text-xs" style={{ color: "var(--text-muted)" }}>
-                  {dailySurah.name_tamil} · {dailySurah.number}:{dailyGroup.verses.join(",")}
-                </p>
-              </Link>
-            </section>
-          )}
+  <section aria-labelledby="daily-ayah-heading">
+    <h2
+      id="daily-ayah-heading"
+      className="text-xs uppercase tracking-wider mb-3"
+      style={{ color: "var(--accent-2)" }}
+    >
+      இன்றைய வசனம் · Verse of the day
+    </h2>
+    <Link
+      href={`/surah/${dailySurah.number}#${dailyGroup.verses[0]}`}
+      className="ink-card block rounded-2xl p-6 sm:p-8 hover:-translate-y-0.5"
+    >
+      <p
+        className="font-arabic-text text-right mb-4"
+        style={{ fontSize: "24px", color: "var(--text)" }}
+      >
+        {dailyGroup.arabic}
+      </p>
+      <p className="font-tamil-text mb-3" style={{ fontSize: "18px", color: "var(--text)" }}>
+        <TamilWithNotes text={dailyGroup.tamil} />
+      </p>
+      <p className="text-xs" style={{ color: "var(--text-muted)" }}>
+        {dailySurah.name_tamil} · {dailySurah.number}:{dailyGroup.verses.join(",")}
+      </p>
+    </Link>
+  </section>
+)}
 
           <section aria-labelledby="surah-grid-heading">
             <div className="flex items-baseline justify-between mb-4">

@@ -34,15 +34,39 @@ const uiFont = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "திருக்குர்ஆன் | Tamil Quran",
+  title: {
+    default: "திருக்குர்ஆன் • Tamil Quran",
+    template: "%s • திருக்குர்ஆன்",
+  },
+
   description:
-    "Read the Holy Quran in Tamil translation with the original Arabic, verse by verse.",
+    "தமிழில் தெளிவான திருக்குர்ஆன் வாசிப்பும் 521 விளக்கக் குறிப்புகளும்.",
+
+  applicationName: "திருக்குர்ஆன்",
+
+  manifest: "/manifest.webmanifest",
+
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "குர்ஆன்",
+  },
+
+  icons: {
+    icon: [
+      { url: "/icons/icon-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icons/icon-512x512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [
+      { url: "/icons/icon-192x192.png" },
+    ],
+  },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#000000",
+  themeColor: "#050505",
 };
 
 export default function RootLayout({
