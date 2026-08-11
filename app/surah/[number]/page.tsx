@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { SiteHeader } from "@/components/SiteHeader";
 import { AyahCard } from "@/components/AyahCard";
 import { SurahIntro } from "@/components/SurahIntro";
 import { ReaderProgressTracker } from "@/components/ReaderProgressTracker";
@@ -45,7 +44,6 @@ export default async function SurahPage({
 
   return (
     <>
-      <SiteHeader />
       <main id="main" className="flex-1 py-8 sm:py-10">
         <ReadingWidthWrapper widen>
           <div className="mb-8 text-center">
