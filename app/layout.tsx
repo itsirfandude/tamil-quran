@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Amiri_Quran, Noto_Serif_Tamil, Fraunces, Inter } from "next/font/google";
+import { SiteHeader } from "@/components/SiteHeader";
 import "./globals.css";
 import { PrefsProvider } from "@/components/PrefsProvider";
 import { NotesProvider } from "@/components/NotesProvider";
@@ -80,9 +81,12 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
-        <PrefsProvider>
-          <NotesProvider>{children}</NotesProvider>
-        </PrefsProvider>
+       <PrefsProvider>
+  <NotesProvider>
+    <SiteHeader />
+    {children}
+  </NotesProvider>
+</PrefsProvider>
       </body>
     </html>
   );

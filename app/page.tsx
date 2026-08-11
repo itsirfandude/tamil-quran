@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { SiteHeader } from "@/components/SiteHeader";
 import { ContinueReading } from "@/components/ContinueReading";
 import { SurahGrid } from "@/components/SurahGrid";
 import { TamilWithNotes } from "@/components/TamilWithNotes";
@@ -30,7 +29,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <SiteHeader />
+      
       <main id="main" className="flex-1">
         {/* Hero */}
         <section className="border-b" style={{ borderColor: "var(--border)" }}>
