@@ -144,6 +144,21 @@ body {
   border-radius: 2px;
 }
 
+.long-page-navigation {
+  right: max(0.75rem, calc((100vw - 42rem) / 2 - 5rem));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+}
+
+.long-page-content {
+  padding-bottom: calc(7rem + env(safe-area-inset-bottom));
+}
+
+@media (max-width: 639px) {
+  .long-page-navigation {
+    right: 0.75rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

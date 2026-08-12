@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { aboutSections } from "@/lib/about";
 import { getIntroSections } from "@/lib/data";
+import { LongPageNavigation } from "@/components/LongPageNavigation";
 
 interface Props {
   params: Promise<{
@@ -371,7 +372,7 @@ export default async function AboutArticlePage({
     );
 
     return (
-      <main className="mx-auto max-w-3xl px-5 pb-20 pt-8 sm:px-6 sm:pt-12">
+      <main className="long-page-content mx-auto max-w-3xl px-5 pb-20 pt-8 sm:px-6 sm:pt-12">
         <Link
           href="/about"
           className="group mb-12 inline-flex items-center gap-2 text-sm transition-opacity hover:opacity-70"
@@ -467,6 +468,7 @@ export default async function AboutArticlePage({
             அறிமுகம்
           </Link>
         </nav>
+        <LongPageNavigation />
       </main>
     );
   }
@@ -516,7 +518,7 @@ export default async function AboutArticlePage({
         : "இந்தத் தமிழாக்கத்தில் இடம்பெறும் அரபுச் சொற்களுக்கான விளக்கங்கள்.";
 
     return (
-      <main className="mx-auto max-w-3xl px-5 pb-20 pt-8 sm:px-6 sm:pt-12">
+      <main className="long-page-content mx-auto max-w-3xl px-5 pb-20 pt-8 sm:px-6 sm:pt-12">
         <Link
           href="/about"
           className="group mb-12 inline-flex items-center gap-2 text-sm transition-opacity hover:opacity-70"
@@ -702,6 +704,7 @@ export default async function AboutArticlePage({
             அறிமுகம்
           </Link>
         </nav>
+        <LongPageNavigation />
       </main>
     );
   }
@@ -735,7 +738,7 @@ export default async function AboutArticlePage({
   }
 
   return (
-    <main className="mx-auto max-w-3xl px-5 pb-20 pt-8 sm:px-6 sm:pt-12">
+    <main className="long-page-content mx-auto max-w-3xl px-5 pb-20 pt-8 sm:px-6 sm:pt-12">
       <Link
         href="/about"
         className="group mb-12 inline-flex items-center gap-2 text-sm transition-opacity hover:opacity-70"
@@ -834,6 +837,7 @@ export default async function AboutArticlePage({
           அறிமுகம்
         </Link>
       </nav>
+      <LongPageNavigation />
     </main>
   );
 }

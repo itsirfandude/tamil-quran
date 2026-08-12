@@ -43,7 +43,7 @@ export function SettingsPanel({ onClose }: { onClose: () => void }) {
       ref={panelRef}
       role="dialog"
       aria-label="Reading settings"
-      className="ink-raised absolute right-0 top-full mt-2 w-80 max-w-[90vw] rounded-2xl p-5 z-50"
+      className="ink-raised relative z-50 mt-2 max-h-[calc(100dvh-8rem-env(safe-area-inset-bottom))] w-full max-w-full overflow-y-auto overscroll-contain rounded-2xl p-5 sm:absolute sm:right-0 sm:top-full sm:mt-2 sm:max-h-[calc(100vh-5rem)] sm:w-80 sm:max-w-[90vw]"
     >
       <div className="flex items-center justify-between mb-4">
         <h2 className="font-display text-sm tracking-wide" style={{ color: "var(--text)" }}>

@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { SiteHeader } from "@/components/SiteHeader";
 import { getNote, TOTAL_NOTES } from "@/lib/data";
+import { LongPageNavigation } from "@/components/LongPageNavigation";
 
 export async function generateStaticParams() {
   return Array.from({ length: TOTAL_NOTES }, (_, i) => ({
@@ -38,8 +38,7 @@ export default async function NotePage({
 
   return (
     <>
-      <SiteHeader />
-      <main id="main" className="flex-1 py-10 sm:py-14">
+      <main id="main" className="long-page-content flex-1 py-10 sm:py-14">
         <div className="mx-auto max-w-2xl px-4 sm:px-6">
           <p
             className="text-xs uppercase tracking-wider mb-2"
@@ -87,6 +86,7 @@ export default async function NotePage({
           </nav>
         </div>
       </main>
+      <LongPageNavigation />
     </>
   );
 }

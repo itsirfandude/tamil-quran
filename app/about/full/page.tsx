@@ -1,4 +1,5 @@
 import { getIntroSections } from "@/lib/data";
+import { LongPageNavigation } from "@/components/LongPageNavigation";
 
 export const metadata = { title: "அறிமுகம் · திருக்குர்ஆன்" };
 
@@ -29,7 +30,7 @@ export default async function AboutPage() {
   const sections = await getIntroSections();
 
   return (
-    <main id="main" className="flex-1 py-10 sm:py-14">
+    <main id="main" className="long-page-content flex-1 py-10 sm:py-14">
       <div className="mx-auto max-w-3xl px-5 sm:px-6">
         <header className="mb-12">
           <p
@@ -254,6 +255,7 @@ export default async function AboutPage() {
           </a>
         </div>
       </div>
+      <LongPageNavigation />
     </main>
   );
 }

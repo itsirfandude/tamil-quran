@@ -6,6 +6,7 @@ import {
   getTopicContentMap,
   getTopics,
 } from "@/lib/data";
+import { LongPageNavigation } from "@/components/LongPageNavigation";
 
 type TopicItem = {
   text?: string;
@@ -84,7 +85,7 @@ export default async function TopicPage({
     const children = selectedItem.children ?? [];
 
     return (
-      <main id="main" className="flex-1 py-10 sm:py-14">
+      <main id="main" className="long-page-content flex-1 py-10 sm:py-14">
         <div className="topic-reading mx-auto max-w-2xl px-5 sm:px-6">
           <header className="mb-12">
             <p
@@ -134,6 +135,7 @@ export default async function TopicPage({
               ))}
             </div>
           </nav>
+          <LongPageNavigation />
         </div>
       </main>
     );
@@ -157,7 +159,7 @@ export default async function TopicPage({
   const quranTransitionText = "திருக்குர்ஆன் இறைவேதம் என்பதற்கான சான்றுகள்";
 
   return (
-    <main id="main" className="flex-1 py-10 sm:py-14">
+    <main id="main" className="long-page-content flex-1 py-10 sm:py-14">
       <div className="topic-reading mx-auto max-w-2xl px-5 sm:px-6">
         <header className="mb-12">
           <p
@@ -257,6 +259,7 @@ export default async function TopicPage({
           })}
         </article>
       </div>
+      <LongPageNavigation />
     </main>
   );
 }

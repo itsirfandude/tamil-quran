@@ -11,6 +11,11 @@ export interface Note {
   paragraphs: string[];
 }
 
+export interface NoteIndexEntry {
+  number: number;
+  title: string;
+}
+
 export interface IntroSection {
   title: string;
   paragraphs: string[];

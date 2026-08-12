@@ -1,4 +1,3 @@
-import { SiteHeader } from "@/components/SiteHeader";
 import { SearchPage } from "@/components/SearchPage";
 
 export const metadata = { title: "தேடல் · Search — திருக்குர்ஆன்" };
@@ -8,11 +7,8 @@ export const metadata = { title: "தேடல் · Search — திருக�
 // itself, so this page just renders the client search UI directly.
 export default function SearchRoute() {
   return (
-    <>
-      <SiteHeader />
-      <main id="main" className="flex-1 py-10">
-        <SearchPage />
-      </main>
-    </>
+    <main id="main" className="flex-1 py-10">
+      <SearchPage />
+    </main>
   );
 }
