@@ -43,6 +43,13 @@ export function SiteHeader() {
             >
               அறிமுகம்
             </Link>
+            <Link
+              href="/topics"
+              className="hidden sm:inline-flex items-center h-9 px-3 rounded-full text-sm hover:opacity-100"
+              style={{ color: "var(--text-muted)" }}
+            >
+              பொருள் அட்டவணை
+            </Link>
             <button
               onClick={() => setSearchOpen(true)}
               aria-label="Search"

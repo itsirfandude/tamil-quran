@@ -163,6 +163,87 @@ body {
   line-height: var(--tamil-leading, 1.9);
 }
 
+/* Topic pages use a quieter, book-like reading scale than the shared
+   Tamil setting used by the rest of the app. */
+.topic-reading {
+  width: 100%;
+}
+
+.topic-section-label {
+  color: var(--accent-2);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.topic-page-title {
+  font-size: 1.875rem;
+  line-height: 1.45;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.topic-heading {
+  max-width: 34rem;
+  font-size: 1.25rem;
+  line-height: 1.55;
+  font-weight: 600;
+}
+
+.topic-subheading {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.topic-body {
+  max-width: 42rem;
+  font-size: 16px;
+  line-height: 1.95;
+}
+
+.topic-references {
+  max-width: 38rem;
+  font-family: var(--font-ui), sans-serif;
+  letter-spacing: 0.01em;
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 640px) {
+  .topic-page-title {
+    font-size: 2.25rem;
+  }
+
+  .topic-heading {
+    font-size: 1.5rem;
+  }
+
+  .topic-body {
+    font-size: 16.5px;
+  }
+}
+
+@media (max-width: 639px) {
+  .topic-page-title {
+    letter-spacing: 0;
+  }
+
+  .topic-heading {
+    max-width: none;
+  }
+
+  .topic-body {
+    font-size: 16px;
+    line-height: 1.95;
+  }
+
+  .topic-references {
+    font-size: 0.7rem;
+    line-height: 1.75;
+  }
+}
+
 .font-arabic-text {
   font-family: var(--font-arabic), serif;
   font-size: var(--arabic-size, 30px);

@@ -1,0 +1,102 @@
+{
+  "version": 1,
+  "entries": {
+    "allah": { "section": "அல்லாஹ்வை நம்புதல்", "mode": "section" },
+    "angels": { "section": "வானவர்களை - மலக்குகளை நம்புதல்", "mode": "section" },
+    "scriptures": { "section": "வேதங்களை நம்புதல்", "mode": "section" },
+    "messengers": { "section": "நபிமார்களை - தூதர்களை நம்புதல்", "mode": "section" },
+    "last-day": { "section": "இறுதி நாளை நம்புதல்", "mode": "section" },
+    "destiny": { "section": "விதியை நம்புதல்", "mode": "section" },
+    "other-beliefs": { "section": "இதர நம்பிக்கைகள்", "mode": "section" },
+
+    "prayer": {
+      "section": "வணக்கங்கள்",
+      "mode": "topics",
+      "sourceTopics": [
+        "தொழுகை கடமை",
+        "தொழுகையின் பயன்",
+        "தூய்மை",
+        "கஅபாவை நோக்குதல்",
+        "நேரம்",
+        "பாங்கு",
+        "ஆடை",
+        "ஈடுபாடு",
+        "திருக்குர்ஆன் ஓதுதல்",
+        "போர்க்களத் தொழுகை",
+        "பயணத் தொழுகை",
+        "இரவுத் தொழுகை",
+        "நண்பரும் பகைவரும்",
+        "பள்ளிவாசலை நிர்வகிக்கும் தகுதி",
+        "பள்ளிவாசல் அல்லாஹ்வுக்குரியது",
+        "பெண்கள் பள்ளிக்கு வருதல்",
+        "பரிகாரம்",
+        "ஜுமுஆத் தொழுகை"
+      ]
+    },
+    "prayer-duty": { "section": "வணக்கங்கள்", "mode": "topic", "sourceTopic": "தொழுகை கடமை" },
+    "prayer-benefit": { "section": "வணக்கங்கள்", "mode": "topic", "sourceTopic": "தொழுகையின் பயன்" },
+    "purity": { "section": "வணக்கங்கள்", "mode": "topic", "sourceTopic": "தூய்மை" },
+    "qibla": { "section": "வணக்கங்கள்", "mode": "topic", "sourceTopic": "கஅபாவை நோக்குதல்" },
+    "prayer-times": { "section": "வணக்கங்கள்", "mode": "topic", "sourceTopic": "நேரம்" },
+    "adhan": { "section": "வணக்கங்கள்", "mode": "topic", "sourceTopic": "பாங்கு" },
+    "prayer-clothing": { "section": "வணக்கங்கள்", "mode": "topic", "sourceTopic": "ஆடை" },
+    "prayer-focus": { "section": "வணக்கங்கள்", "mode": "topic", "sourceTopic": "ஈடுபாடு" },
+    "quran-recitation": { "section": "வணக்கங்கள்", "mode": "topic", "sourceTopic": "திருக்குர்ஆன் ஓதுதல்" },
+    "battle-prayer": { "section": "வணக்கங்கள்", "mode": "topic", "sourceTopic": "போர்க்களத் தொழுகை" },
+    "traveler-prayer": { "section": "வணக்கங்கள்", "mode": "topic", "sourceTopic": "பயணத் தொழுகை" },
+    "night-prayer": { "section": "வணக்கங்கள்", "mode": "topic", "sourceTopic": "இரவுத் தொழுகை" },
+    "friends-and-enemies": { "section": "வணக்கங்கள்", "mode": "topic", "sourceTopic": "நண்பரும் பகைவரும்" },
+    "mosque-management": { "section": "வணக்கங்கள்", "mode": "topic", "sourceTopic": "பள்ளிவாசலை நிர்வகிக்கும் தகுதி" },
+    "mosque-belongs-to-allah": { "section": "வணக்கங்கள்", "mode": "topic", "sourceTopic": "பள்ளிவாசல் அல்லாஹ்வுக்குரியது" },
+    "women-at-mosque": { "section": "வணக்கங்கள்", "mode": "topic", "sourceTopic": "பெண்கள் பள்ளிக்கு வருதல்" },
+    "expiation": { "section": "வணக்கங்கள்", "mode": "topic", "sourceTopic": "பரிகாரம்" },
+    "jummah-prayer": { "section": "வணக்கங்கள்", "mode": "topic", "sourceTopic": "ஜுமுஆத் தொழுகை" },
+
+    "fasting": { "section": "வணக்கங்கள்", "mode": "topic", "sourceTopic": "நோன்பு" },
+    "zakat": { "section": "வணக்கங்கள்", "mode": "topic", "sourceTopic": "ஜகாத்" },
+    "hajj": { "section": "வணக்கங்கள்", "mode": "topic", "sourceTopic": "ஹஜ்" },
+    "other-worship": {
+      "section": "வணக்கங்கள்",
+      "mode": "topics",
+      "sourceTopics": [
+        "குர்பானி",
+        "நேர்ச்சை",
+        "சத்தியம் செய்தல்",
+        "அறுத்துப் பலியிடுதல்",
+        "பிரார்த்தனை",
+        "இறைவனை நினைவு கூரல்",
+        "பாவமன்னிப்பு",
+        "இஃதிகாப்"
+      ]
+    },
+
+    "prophets": {
+      "section": "வரலாறு",
+      "mode": "topics",
+      "sourceTopics": ["ஆதம்", "இத்ரீஸ்", "மூஸா", "ஈஸா", "ஸுலைமான்", "இப்ராஹீம்", "இஸ்மாயீல்", "இஸ்ஹாக்", "ஹாரூன்", "தாவூது", "நூஹ்", "ஸகரிய்யா", "யஹ்யா", "அய்யூப்", "யூனுஸ்", "யூஸுஃப்", "இல்யாஸ்", "அல்யஸஃ", "துல்கிஃப்ல்", "ஷுஐப்", "யஃகூப்", "ஸாலிஹ்", "லூத்", "ஹூது", "நபிகள் நாயகம்"]
+    },
+    "good-and-evil": {
+      "section": "வரலாறு",
+      "mode": "topics",
+      "sourceTopics": ["மர்யம்", "இம்ரான்", "அபூபக்ர்", "குகைவாசிகள்", "லுக்மான்", "தாலூத்", "துல்கர்னைன்", "அந்த மூவர்", "ஸைத்", "ஸாபியீன்கள்", "ஆது சமுதாயம்", "ஸமூது", "யானைப்படை", "அபூலஹப்", "இரம்", "காரூன்", "ஆஸர்", "ஜாலூத்", "யஃஜூஜ் மஃஜூஜ்", "ஃபிர்அவ்ன்", "ஸாமிரீ", "மஜூஸிகள்", "நயவஞ்சகர்கள்", "இஸ்ரவேலர்கள்", "யூதர்கள்", "கிறித்தவர்கள்", "ஆதமின் இரு புதல்வர்களில் ஒருவர்", "மனாத்", "லாத்", "உஸ்ஸா", "வத்து", "ஸுவாவு", "யகூஸ்", "நஸ்ர்", "குரைஷ்"]
+    },
+    "places": {
+      "section": "வரலாறு",
+      "mode": "topics",
+      "sourceTopics": ["ஸித்ரதுல் முன்தஹா", "மக்கா (பக்கா)", "ரோமாபுரி", "ஹுதைபியா", "யஸ்ரிப் (மதீனா)", "மிஸ்ர் (எகிப்து)", "மத்யன்", "தூர் மலை", "ஜூதி மலை", "கஅபா", "உஹது", "பத்ரு", "அகழ்ப் போர்", "ஹுனைன்"]
+    },
+    "creatures": {
+      "section": "வரலாறு",
+      "mode": "topics",
+      "sourceTopics": ["உயிரினங்கள்"]
+    },
+    "good-character": { "section": "நல்ல பண்புகள்", "mode": "section" },
+    "bad-character": { "section": "தீய பண்புகள்", "mode": "section" },
+    "economy": { "section": "பொருளாதாரம்", "mode": "section" },
+    "major-sins": { "section": "பெரும் பாவங்கள்", "mode": "section" },
+    "politics": { "section": "அரசியல்", "mode": "section" },
+    "criminal-law": { "section": "குற்றவியல் சட்டங்கள்", "mode": "section" },
+    "education": { "section": "கல்வி", "mode": "section" },
+    "family": { "section": "குடும்பவியல்", "mode": "section" }
+  }
+}

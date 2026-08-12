@@ -1,0 +1,149 @@
+
+[
+  {
+    "title": "கொள்கை (அகீதா)",
+    "items": [
+      {
+        "title": "அல்லாஹ்வை நம்புதல்",
+        "slug": "allah"
+      },
+      {
+        "title": "வானவர்களை நம்புதல்",
+        "slug": "angels"
+      },
+      {
+        "title": "வேதங்களை நம்புதல்",
+        "slug": "scriptures"
+        },
+      {
+        "title": "தூதர்களை நம்புதல்",
+        "slug": "messengers"
+      },
+      {
+        "title": "இறுதி நாளை நம்புதல்",
+        "slug": "last-day"
+      },
+      {
+        "title": "விதியை நம்புதல்",
+        "slug": "destiny"
+      },
+      {
+        "title": "இதர நம்பிக்கைகள்",
+        "slug": "other-beliefs"
+      }
+    ]
+  },
+  {
+    "title": "வணக்கங்கள்",
+    "items": [
+      {
+        "title": "தொழுகை",
+        "slug": "prayer"
+      },
+      {
+        "title": "நோன்பு",
+        "slug": "fasting"
+      },
+      {
+        "title": "ஸகாத்",
+        "slug": "zakat"
+      },
+      {
+        "title": "ஹஜ்",
+        "slug": "hajj"
+      },
+      {
+        "title": "இதர வணக்கங்கள்",
+        "slug": "other-worship"
+      }
+    ]
+  },
+  {
+    "title": "வரலாறு",
+    "items": [
+      {
+        "title": "நபிமார்கள்",
+        "slug": "prophets"
+      },
+      {
+        "title": "நல்லோர் - தீயோர்",
+        "slug": "good-and-evil"
+      },
+      {
+        "title": "இடங்கள்",
+        "slug": "places"
+      },
+      {
+        "title": "உயிரினங்கள்",
+        "slug": "creatures"
+      }
+    ]
+  },
+  {
+    "title": "பண்புகள்",
+    "items": [
+      {
+        "title": "நல்ல பண்புகள்",
+        "slug": "good-character"
+      },
+      {
+        "title": "தீய பண்புகள்",
+        "slug": "bad-character"
+      }
+    ]
+  },
+  {
+    "title": "பொருளாதாரம்",
+    "items": [
+      {
+        "title": "பொருளாதாரம்",
+        "slug": "economy"
+      }
+    ]
+  },
+  {
+    "title": "பெரும் பாவங்கள்",
+    "items": [
+      {
+        "title": "பெரும் பாவங்கள்",
+        "slug": "major-sins"
+      }
+    ]
+  },
+  {
+    "title": "அரசியல்",
+    "items": [
+      {
+        "title": "அரசியல்",
+        "slug": "politics"
+      }
+    ]
+  },
+  {
+    "title": "குற்றவியல் சட்டங்கள்",
+    "items": [
+      {
+        "title": "குற்றவியல் சட்டங்கள்",
+        "slug": "criminal-law"
+      }
+    ]
+  },
+  {
+    "title": "கல்வி",
+    "items": [
+      {
+        "title": "கல்வி",
+        "slug": "education"
+      }
+    ]
+  },
+  {
+    "title": "குடும்பவியல்",
+    "items": [
+      {
+        "title": "குடும்பவியல்",
+        "slug": "family"
+      }
+    ]
+  }
+]
