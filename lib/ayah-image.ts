@@ -2,6 +2,7 @@ import type { AyahGroup } from "@/lib/types";
 
 export const AYAH_IMAGE_WIDTH = 1080;
 export const AYAH_IMAGE_HEIGHT = 1920;
+const MAX_TAMIL_SIZE = Math.max(22, Math.round(94 * 0.46));
 
 const FOOTNOTE_MARKER = /¤\d+¤/g;
 
@@ -61,6 +62,58 @@ function setFont(ctx: CanvasRenderingContext2D, size: number, family: string) {
   ctx.font = `${size}px ${family}`;
 }
 
+function isGraphemeContinuation(character: string) {
+  const codePoint = character.codePointAt(0) ?? 0;
+  return (
+    character === "\u200d" ||
+    (codePoint >= 0x0300 && codePoint <= 0x036f) ||
+    (codePoint >= 0x1ab0 && codePoint <= 0x1aff) ||
+    (codePoint >= 0x1dc0 && codePoint <= 0x1dff) ||
+    (codePoint >= 0x20d0 && codePoint <= 0x20ff) ||
+    (codePoint >= 0x0bbe && codePoint <= 0x0bcd) ||
+    (codePoint >= 0xfe00 && codePoint <= 0xfe0f) ||
+    (codePoint >= 0x1f3fb && codePoint <= 0x1f3ff)
+  );
+}
+
+function segmentGraphemes(text: string) {
+  if (typeof Intl.Segmenter === "function") {
+    const segmenter = new Intl.Segmenter("ta", { granularity: "grapheme" });
+    return Array.from(segmenter.segment(text), ({ segment }) => segment);
+  }
+
+  const graphemes: string[] = [];
+  for (const character of text) {
+    const previous = graphemes[graphemes.length - 1];
+    if (previous?.endsWith("\u200d") || isGraphemeContinuation(character)) {
+      graphemes[graphemes.length - 1] += character;
+    } else {
+      graphemes.push(character);
+    }
+  }
+  return graphemes;
+}
+
+function wrapWord(
+  ctx: CanvasRenderingContext2D,
+  word: string,
+  maxWidth: number,
+) {
+  const lines: string[] = [];
+  let line = "";
+  for (const grapheme of segmentGraphemes(word)) {
+    const candidate = line + grapheme;
+    if (!line || ctx.measureText(candidate).width <= maxWidth) {
+      line = candidate;
+    } else {
+      lines.push(line);
+      line = grapheme;
+    }
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+
 function wrapText(
   ctx: CanvasRenderingContext2D,
   text: string,
@@ -77,21 +130,16 @@ function wrapText(
     let line = "";
     for (const word of words) {
       const candidate = line ? `${line} ${word}` : word;
-      if (!line || ctx.measureText(candidate).width <= maxWidth) {
+      if (ctx.measureText(candidate).width <= maxWidth) {
         line = candidate;
         continue;
       }
 
-      lines.push(line);
-      line = "";
-      for (const character of word) {
-        const characterCandidate = line + character;
-        if (!line || ctx.measureText(characterCandidate).width <= maxWidth) {
-          line = characterCandidate;
-        } else {
-          lines.push(line);
-          line = character;
-        }
+      if (line) lines.push(line);
+      const wordLines = wrapWord(ctx, word, maxWidth);
+      line = wordLines.pop() ?? "";
+      for (const wordLine of wordLines) {
+        lines.push(wordLine);
       }
     }
     if (line) lines.push(line);
@@ -164,6 +212,10 @@ export async function generateAyahImage(input: AyahImageInput) {
   const arabicFamily = getFontFamily("--font-arabic", "serif");
   const tamilFamily = getFontFamily("--font-tamil", "serif");
   const uiFamily = getFontFamily("--font-ui", "sans-serif");
+  const tamilText = stripFootnoteMarkers(input.group.tamil);
+  if (document.fonts?.load) {
+    await document.fonts.load(`${MAX_TAMIL_SIZE}px ${tamilFamily}`, tamilText);
+  }
   const layout = createLayout(ctx, input, arabicFamily, tamilFamily);
   const verseLabel = input.group.verses.length > 1
     ? `${input.group.verses[0]}–${input.group.verses[input.group.verses.length - 1]}`
