@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
 import { usePrefs } from "./PrefsProvider";
 import { VerseBadge } from "./VerseBadge";
-import { TamilWithNotes, NOTE_MARKER } from "./TamilWithNotes";
+import { TamilWithNotes } from "./TamilWithNotes";
+import { AyahShareMenu } from "./AyahShareMenu";
 import type { AyahGroup } from "@/lib/types";
 
 export function AyahCard({
@@ -16,44 +16,12 @@ export function AyahCard({
   group: AyahGroup;
 }) {
   const { prefs, isBookmarked, toggleBookmark } = usePrefs();
-  const [copied, setCopied] = useState(false);
   const key = `${surah}:${group.verses.join("-")}`;
   const bookmarked = isBookmarked(key);
   const verseLabel =
     group.verses.length > 1
       ? `${group.verses[0]}-${group.verses[group.verses.length - 1]}`
       : `${group.verses[0]}`;
-
-  async function handleCopy() {
-    const plainText = group.tamil.replace(NOTE_MARKER, "");
-    const text = `${plainText}\n\n(${surahName} ${surah}:${verseLabel})`;
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      /* clipboard unavailable */
-    }
-  }
-
-  async function handleShare() {
-    const url = `${window.location.origin}/surah/${surah}#${group.verses[0]}`;
-    if (navigator.share) {
-      try {
-        await navigator.share({ title: `${surahName} ${verseLabel}`, url });
-        return;
-      } catch {
-        /* user cancelled */
-      }
-    }
-    try {
-      await navigator.clipboard.writeText(url);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      /* ignore */
-    }
-  }
 
   return (
     <article
@@ -64,12 +32,11 @@ export function AyahCard({
       <div className="flex items-center justify-between mb-4">
         <VerseBadge verses={group.verses} />
         <div className="flex items-center gap-1">
-          <ActionButton label={copied ? "Copied" : "Copy"} onClick={handleCopy}>
-            <CopyIcon />
-          </ActionButton>
-          <ActionButton label="Share" onClick={handleShare}>
-            <ShareIcon />
-          </ActionButton>
+          <AyahShareMenu
+            surah={surah}
+            surahName={surahName}
+            group={group}
+          />
           <ActionButton
             label={bookmarked ? "Remove bookmark" : "Bookmark"}
             onClick={() =>
@@ -125,26 +92,6 @@ function ActionButton({
     >
       {children}
     </button>
-  );
-}
-
-function CopyIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-      <rect x="8" y="8" width="12" height="12" rx="2" />
-      <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
-    </svg>
-  );
-}
-
-function ShareIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-      <circle cx="18" cy="5" r="2.5" />
-      <circle cx="6" cy="12" r="2.5" />
-      <circle cx="18" cy="19" r="2.5" />
-      <path d="M8.3 10.7 15.7 6.6M8.3 13.3l7.4 4.1" />
-    </svg>
   );
 }
 
