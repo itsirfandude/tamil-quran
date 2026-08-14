@@ -12,44 +12,39 @@ export default function manifest(): MetadataRoute.Manifest {
     display: "standalone",
     orientation: "portrait",
 
-    background_color: "#050505",
-    theme_color: "#050505",
+    background_color: "#000000",
+    theme_color: "#000000",
 
     lang: "ta",
 
     categories: ["books", "reference", "education"],
-icons: [
-  {
-    src: "/icons/icon-192x192.png",
-    sizes: "192x192",
-    type: "image/png",
-    purpose: "any",
-  },
-  {
-    src: "/icons/icon-192x192.png",
-    sizes: "192x192",
-    type: "image/png",
-    purpose: "maskable",
-  },
-  {
-    src: "/icons/icon-512x512.png",
-    sizes: "512x512",
-    type: "image/png",
-    purpose: "any",
-  },
-  {
-    src: "/icons/icon-512x512.png",
-    sizes: "512x512",
-    type: "image/png",
-    purpose: "maskable",
-  },
-],
+    icons: [
+      {
+        src: "/icons/icon-192x192.png",
+        sizes: "192x192",
+        type: "image/png",
+        purpose: "any",
+      },
+      {
+        src: "/icons/icon-512x512.png",
+        sizes: "512x512",
+        type: "image/png",
+        purpose: "any",
+      },
+      {
+        src: "/icons/maskable-icon-512x512.png",
+        sizes: "512x512",
+        type: "image/png",
+        purpose: "maskable",
+      },
+    ],
 
     shortcuts: [
       {
-        name: "வாசிப்பைத் தொடர",
+        name: "தொடர்ந்து படிக்க",
         short_name: "தொடரவும்",
-        url: "/bookmarks",
+        description: "உங்கள் கடைசி வாசிப்பு இடத்திலிருந்து தொடரவும்.",
+        url: "/",
       },
       {
         name: "தேடல்",

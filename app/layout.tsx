@@ -4,6 +4,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import "./globals.css";
 import { PrefsProvider } from "@/components/PrefsProvider";
 import { NotesProvider } from "@/components/NotesProvider";
+import { ServiceWorkerRegistration } from "@/components/ServiceWorkerRegistration";
 
 const arabicFont = Amiri_Quran({
   variable: "--font-arabic",
@@ -81,6 +82,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
+       <ServiceWorkerRegistration />
        <PrefsProvider>
   <NotesProvider>
     <SiteHeader />
