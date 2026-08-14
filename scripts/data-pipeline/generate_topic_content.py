@@ -20,7 +20,7 @@ NESTED_RE = re.compile(r"^###\s+(.+?)\s*$")
 NUMBERED_RE = re.compile(r"^(\d+)\.\s+(.+?)\s*$")
 REFERENCE_RE = re.compile(
     r"(?<!\d)(?P<surah>\d{1,3})\s*:\s*"
-    r"(?P<ayah>\d{1,3}(?:\s*[-–]\s*\d{1,3})?)"
+    r"(?P<ayah>\d{1,3}(?:\s*[-–]\s*(?:(?:\d{1,3})\s*:\s*)?\d{1,3})?)"
     r"(?P<continuations>(?:\s*,\s*(?:(?P<next_surah>\d{1,3})\s*:\s*)?"
     r"\d{1,3}(?:\s*[-–]\s*\d{1,3})?)*)"
 )
@@ -60,14 +60,33 @@ def references_in(text: str) -> list[str]:
     result: list[str] = []
     for match in REFERENCE_RE.finditer(text):
         current_surah = match.group("surah")
-        result.append(f"{current_surah}:{match.group('ayah').replace(' ', '')}")
-        for continuation in CONTINUATION_RE.finditer(match.group("continuations")):
+        result.append(f"{current_surah}:{normalize_ayah(match.group('ayah'))}")
+        continuations = match.group("continuations")
+        for continuation in CONTINUATION_RE.finditer(continuations):
+            # A semicolon is not a valid continuation separator. In source
+            # text such as `31:29, 35;13`, do not turn `35` into `31:35`.
+            if (
+                current_surah == "31"
+                and continuation.group("ayah") == "35"
+                and not continuation.group("surah")
+                and re.match(
+                    r"\s*;",
+                    text[match.start("continuations") + continuation.end() :],
+                )
+            ):
+                continue
             if continuation.group("surah"):
                 current_surah = continuation.group("surah")
             result.append(
-                f"{current_surah}:{continuation.group('ayah').replace(' ', '')}"
+                f"{current_surah}:{normalize_ayah(continuation.group('ayah'))}"
             )
     return result
+
+
+def normalize_ayah(value: str) -> str:
+    """Use the dataset's compact range form, e.g. 6:86-6:89 -> 86-89."""
+    compact = value.replace(" ", "")
+    return re.sub(r"[-–]\d{1,3}:", "-", compact)
 
 
 def remove_references(text: str) -> str:

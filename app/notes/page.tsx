@@ -13,7 +13,7 @@ export default async function NotesPage() {
       <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-14">
         <header className="mb-10">
           <p
-            className="font-tamil-text mb-3 text-xs tracking-[0.28em]"
+            className="font-tamil-text mb-3 text-xs"
             style={{ color: "var(--accent-2)" }}
           >
             விளக்கங்கள்

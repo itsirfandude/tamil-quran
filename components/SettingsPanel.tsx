@@ -4,13 +4,13 @@ import { useEffect, useRef } from "react";
 import { usePrefs } from "./PrefsProvider";
 import type { ThemeId } from "@/lib/types";
 
-const THEMES: { id: ThemeId; label: string; swatch: string; swatchAccent: string }[] = [
-  { id: "dark", label: "OLED Black", swatch: "#000000", swatchAccent: "#d9bb78" },
-  { id: "night-blue", label: "Night Blue", swatch: "#060d1c", swatchAccent: "#c9a24b" },
-  { id: "emerald", label: "Emerald", swatch: "#06130e", swatchAccent: "#d6b65a" },
-  { id: "classic", label: "Classic Paper", swatch: "#f2ecdc", swatchAccent: "#2b4c7e" },
-  { id: "sepia", label: "Sepia", swatch: "#ebdcc0", swatchAccent: "#8b4a2b" },
-  { id: "contrast", label: "High Contrast", swatch: "#000000", swatchAccent: "#ffd400" },
+const THEMES: { id: ThemeId; label: string }[] = [
+  { id: "dark", label: "OLED Black" },
+  { id: "night-blue", label: "Night Blue" },
+  { id: "emerald", label: "Emerald" },
+  { id: "classic", label: "Classic Paper" },
+  { id: "sepia", label: "Sepia" },
+  { id: "contrast", label: "High Contrast" },
 ];
 
 export function SettingsPanel({ onClose }: { onClose: () => void }) {
@@ -76,11 +76,12 @@ export function SettingsPanel({ onClose }: { onClose: () => void }) {
             >
               <span
                 className="h-6 w-full rounded-md border flex items-center justify-center"
-                style={{ background: t.swatch, borderColor: "var(--border)" }}
+                data-theme={t.id}
+                style={{ background: "var(--bg)", borderColor: "var(--border)" }}
               >
                 <span
                   className="h-2 w-2 rounded-full"
-                  style={{ background: t.swatchAccent }}
+                  style={{ background: "var(--accent)" }}
                 />
               </span>
               <span className="text-[10px] leading-tight text-center" style={{ color: "var(--text-muted)" }}>

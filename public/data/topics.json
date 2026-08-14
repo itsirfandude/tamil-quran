@@ -38,7 +38,27 @@
     "items": [
       {
         "title": "தொழுகை",
-        "slug": "prayer"
+        "slug": "prayer",
+        "children": [
+          { "title": "தொழுகை கடமை", "slug": "prayer-duty" },
+          { "title": "தொழுகையின் பயன்", "slug": "prayer-benefit" },
+          { "title": "தூய்மை", "slug": "purity" },
+          { "title": "கஅபாவை நோக்குதல்", "slug": "qibla" },
+          { "title": "நேரம்", "slug": "prayer-times" },
+          { "title": "பாங்கு", "slug": "adhan" },
+          { "title": "ஆடை", "slug": "prayer-clothing" },
+          { "title": "ஈடுபாடு", "slug": "prayer-focus" },
+          { "title": "திருக்குர்ஆன் ஓதுதல்", "slug": "quran-recitation" },
+          { "title": "போர்க்களத் தொழுகை", "slug": "battle-prayer" },
+          { "title": "பயணத் தொழுகை", "slug": "traveler-prayer" },
+          { "title": "இரவுத் தொழுகை", "slug": "night-prayer" },
+          { "title": "நண்பரும் பகைவரும்", "slug": "friends-and-enemies" },
+          { "title": "பள்ளிவாசலை நிர்வகிக்கும் தகுதி", "slug": "mosque-management" },
+          { "title": "பள்ளிவாசல் அல்லாஹ்வுக்குரியது", "slug": "mosque-belongs-to-allah" },
+          { "title": "பெண்கள் பள்ளிக்கு வருதல்", "slug": "women-at-mosque" },
+          { "title": "பரிகாரம்", "slug": "expiation" },
+          { "title": "ஜுமுஆத் தொழுகை", "slug": "jummah-prayer" }
+        ]
       },
       {
         "title": "நோன்பு",
