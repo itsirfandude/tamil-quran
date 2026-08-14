@@ -136,43 +136,35 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
             ref={inputRef}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="தமிழில் தேடுங்கள் அல்லது 2:183 எனத் தேடுங்கள்..."
+            placeholder="தமிழில் தேடுக..."
             className="flex-1 bg-transparent outline-none font-tamil-text text-base"
             style={{ color: "var(--text)", fontSize: "17px" }}
             aria-label="Search Tamil translation"
           />
           <button
             onClick={onClose}
-            className="text-xs px-2 py-1 rounded border"
+            className="hidden rounded border px-2 py-1 text-xs sm:inline-flex"
             style={{ borderColor: "var(--border)", color: "var(--text-muted)" }}
           >
             Esc
           </button>
         </div>
-        
-                
-
         <div
-          className="px-4 py-2 border-b flex justify-between items-center"
+          className="hidden items-center justify-between border-b px-4 py-2 sm:flex"
           style={{ borderColor: "var(--border)" }}
         >
-          <span
-            className="text-xs"
-            style={{ color: "var(--text-muted)" }}
-          >
+          <span className="text-xs" style={{ color: "var(--text-muted)" }}>
             Need more than quick search?
           </span>
-
           <Link
             href="/search"
             onClick={onClose}
             className="text-sm font-medium hover:underline"
             style={{ color: "var(--accent-2)" }}
           >
-              மேம்பட்ட தேடல் →
+            மேம்பட்ட தேடல் →
           </Link>
         </div>
-
         <div className="max-h-[60vh] overflow-y-auto">
           {bareSurahResult && (
             <Link
@@ -239,8 +231,7 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
             )}
           {!bareSurah && !verseRef && trimmed.length < 2 && (
             <p className="p-6 text-sm" style={{ color: "var(--text-muted)" }}>
-              Type at least 2 characters to search the Tamil translation, or
-              try a reference like 2:183 or just 96.
+              ஸூரா அல்லது வசன எண்ணை உள்ளிடலாம் (எ.கா. 2:255)
             </p>
           )}
           <ul>

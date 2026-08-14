@@ -205,12 +205,12 @@ function EmptyState() {
         திருக்குர்ஆனில் தேடுங்கள்
       </p>
       <p className="text-sm mb-2" style={{ color: "var(--text-muted)" }}>
-        Search by
+        தேடலாம்:
       </p>
       <ul className="text-sm space-y-1" style={{ color: "var(--text-muted)" }}>
-        <li>Surah name</li>
-        <li>Surah number</li>
-        <li>Tamil translation</li>
+        <li>ஸூரா பெயர்</li>
+        <li>ஸூரா எண்</li>
+        <li>தமிழ் மொழிபெயர்ப்பு</li>
       </ul>
     </div>
   );
@@ -334,7 +334,7 @@ export function SearchPage() {
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="தேடுங்கள்... (Surah, verse, word)"
+            placeholder="தமிழில் தேடுக..."
             className="flex-1 bg-transparent outline-none font-tamil-text"
             style={{ color: "var(--text)", fontSize: "17px" }}
             autoComplete="off"

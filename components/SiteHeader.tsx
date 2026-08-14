@@ -5,6 +5,28 @@ import Link from "next/link";
 import { SettingsPanel } from "./SettingsPanel";
 import { SearchOverlay } from "./SearchOverlay";
 
+type NavigationItem = {
+  href: string;
+  label: string;
+};
+
+type MobileNavigationItem = NavigationItem & {
+  icon: "about" | "topics" | "notes" | "bookmarks";
+};
+
+const desktopNavigationItems: NavigationItem[] = [
+  { href: "/about", label: "அறிமுகம்" },
+  { href: "/topics", label: "பொருள் அட்டவணை" },
+  { href: "/notes", label: "விளக்கங்கள்" },
+];
+
+const mobileNavigationItems: MobileNavigationItem[] = [
+  { href: "/about", label: "அறிமுகம்", icon: "about" },
+  { href: "/topics", label: "பொருள் அட்டவணை", icon: "topics" },
+  { href: "/notes", label: "விளக்கங்கள்", icon: "notes" },
+  { href: "/bookmarks", label: "புக்மார்க்குகள்", icon: "bookmarks" },
+];
+
 export function SiteHeader() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -71,43 +93,16 @@ export function SiteHeader() {
 
           <nav className="hidden items-center gap-1 sm:flex sm:gap-2">
 
-             <Link
-              href="/about"
-              className="hidden h-9 items-center rounded-full px-3 text-sm sm:inline-flex"
-              style={{ color: "var(--text-muted)" }}
-            >
-              அறிமுகம்
-            </Link>
-
-
-            <Link
-
-    href="/topics"
-
-    className="hidden h-9 items-center rounded-full px-3 text-sm sm:inline-flex"
-
-    style={{ color: "var(--text-muted)" }}
-
-  >
-
-    பொருள் அட்டவணை
-
-  </Link>
-
-
+            {desktopNavigationItems.map((item) => (
               <Link
-
-    href="/notes"
-
-    className="hidden h-9 items-center rounded-full px-3 text-sm sm:inline-flex"
-
-    style={{ color: "var(--text-muted)" }}
-
-  >
-
-    விளக்கங்கள்
-
-  </Link>
+                key={item.href}
+                href={item.href}
+                className="hidden h-9 items-center rounded-full px-3 text-sm sm:inline-flex"
+                style={{ color: "var(--text-muted)" }}
+              >
+                {item.label}
+              </Link>
+            ))}
 
             <button
               onClick={() => setSearchOpen(true)}
@@ -209,23 +204,18 @@ export function SiteHeader() {
         <div
           id="mobile-navigation"
           hidden={!mobileMenuOpen}
-          className="border-t px-4 pb-4 pt-2 sm:hidden"
-          style={{ borderColor: "var(--border)" }}
+          className="absolute left-4 right-4 top-full z-50 mt-3 rounded-2xl border p-3 sm:hidden"
+          style={{
+            background: "var(--bg-card)",
+            borderColor: "var(--border)",
+            boxShadow: "var(--raised-shadow)",
+          }}
         >
-            <nav aria-label="Mobile navigation" className="flex flex-col">
-              <MobileNavLink href="/topics" onClick={closeMobileMenu}>
-                பொருள் அட்டவணை
-              </MobileNavLink>
-              <MobileNavLink href="/notes" onClick={closeMobileMenu}>
-                குறிப்புகள்
-              </MobileNavLink>
-              <MobileNavLink href="/about" onClick={closeMobileMenu}>
-                அறிமுகம்
-              </MobileNavLink>
-              <MobileNavLink href="/bookmarks" onClick={closeMobileMenu}>
-                குறிக்கப்பட்டவை
-              </MobileNavLink>
-            </nav>
+          <nav aria-label="Mobile navigation" className="grid grid-cols-2 gap-2">
+            {mobileNavigationItems.map((item) => (
+              <MobileNavCard key={item.href} item={item} onClick={closeMobileMenu} />
+            ))}
+          </nav>
         </div>
       </header>
 
@@ -236,25 +226,66 @@ export function SiteHeader() {
   );
 }
 
-function MobileNavLink({
-  href,
+function MobileNavCard({
+  item,
   onClick,
-  children,
 }: {
-  href: string;
+  item: MobileNavigationItem;
   onClick: () => void;
-  children: React.ReactNode;
 }) {
   return (
     <Link
-      href={href}
+      href={item.href}
       onClick={onClick}
-      className="flex min-h-11 items-center rounded-lg px-3 font-tamil-text text-base"
-      style={{ color: "var(--text-muted)" }}
+      className="flex min-h-[5.5rem] flex-col items-center justify-center gap-2 rounded-xl border px-2 py-3 text-center transition-colors hover:bg-[var(--selection)] active:bg-[var(--selection)]"
+      style={{
+        background: "var(--bg-raised)",
+        borderColor: "var(--border)",
+        color: "var(--text)",
+      }}
     >
-      {children}
+      <span
+        className="flex h-8 w-8 items-center justify-center rounded-full"
+        style={{ background: "var(--selection)", color: "var(--accent-2)" }}
+      >
+        <MobileNavIcon name={item.icon} />
+      </span>
+      <span className="font-tamil-text text-sm leading-snug">{item.label}</span>
     </Link>
   );
+}
+
+function MobileNavIcon({ name }: { name: MobileNavigationItem["icon"] }) {
+  if (name === "about") {
+    return (
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
+        <path d="M5 4.5A2.5 2.5 0 0 1 7.5 2H19v17H7.5A2.5 2.5 0 0 0 5 21.5z" />
+        <path d="M5 4.5v17M9 6h6M9 10h6" />
+      </svg>
+    );
+  }
+
+  if (name === "topics") {
+    return (
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
+        <rect x="4" y="4" width="6" height="6" rx="1" />
+        <rect x="14" y="4" width="6" height="6" rx="1" />
+        <rect x="4" y="14" width="6" height="6" rx="1" />
+        <rect x="14" y="14" width="6" height="6" rx="1" />
+      </svg>
+    );
+  }
+
+  if (name === "notes") {
+    return (
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
+        <path d="M6 4h12a1 1 0 0 1 1 1v14H5V5a1 1 0 0 1 1-1Z" />
+        <path d="M8 8h8M8 12h8M8 16h5" />
+      </svg>
+    );
+  }
+
+  return <BookmarkNavIcon />;
 }
 
 function MenuIcon({ open }: { open: boolean }) {
