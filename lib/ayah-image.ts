@@ -200,7 +200,14 @@ function roundedRect(
 }
 
 export async function generateAyahImage(input: AyahImageInput) {
-  if (document.fonts?.ready) await document.fonts.ready;
+  if (document.fonts?.ready) {
+    try {
+      await document.fonts.ready;
+    } catch {
+      // A failed font request must not prevent the browser fallback from
+      // rendering the image.
+    }
+  }
 
   const canvas = document.createElement("canvas");
   canvas.width = AYAH_IMAGE_WIDTH;
@@ -214,7 +221,12 @@ export async function generateAyahImage(input: AyahImageInput) {
   const uiFamily = getFontFamily("--font-ui", "sans-serif");
   const tamilText = stripFootnoteMarkers(input.group.tamil);
   if (document.fonts?.load) {
-    await document.fonts.load(`${MAX_TAMIL_SIZE}px ${tamilFamily}`, tamilText);
+    try {
+      await document.fonts.load(`${MAX_TAMIL_SIZE}px ${tamilFamily}`, tamilText);
+    } catch {
+      // Android browsers can reject a font request as a network error even
+      // though canvas and the system fallback fonts remain usable.
+    }
   }
   const layout = createLayout(ctx, input, arabicFamily, tamilFamily);
   const verseLabel = input.group.verses.length > 1
@@ -265,8 +277,12 @@ export async function generateAyahImage(input: AyahImageInput) {
   y += 72;
   ctx.fillStyle = theme.text;
   ctx.font = `${layout.tamilSize}px ${tamilFamily}`;
+  ctx.textAlign = "left";
   for (const line of layout.tamilLines) {
-    ctx.fillText(line, 540, y);
+    // Use an explicit left edge instead of relying on Safari's canvas
+    // text-anchor handling for Tamil after the preceding RTL text.
+    const lineWidth = ctx.measureText(line).width;
+    ctx.fillText(line, (AYAH_IMAGE_WIDTH - lineWidth) / 2, y);
     y += layout.tamilLineHeight;
   }
 
@@ -275,6 +291,7 @@ export async function generateAyahImage(input: AyahImageInput) {
   ctx.fillRect(350, footerY - 52, 380, 2);
   ctx.fillStyle = theme.text;
   ctx.font = `600 29px ${uiFamily}`;
+  ctx.textAlign = "center";
   ctx.fillText(`${input.surahName} · ${input.surah}:${verseLabel}`, 540, footerY);
 
   const blob = await new Promise<Blob | null>((resolve) =>

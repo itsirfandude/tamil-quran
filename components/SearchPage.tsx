@@ -297,6 +297,8 @@ export function SearchPage() {
       return; // render gates on verseRef before reading reference/referenceLoading
     }
     if (verseRef.surah < 1 || verseRef.surah > 114) {
+      // The invalid-reference branch clears stale async state before rendering.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setReference(null);
       setReferenceLoading(false);
       return;

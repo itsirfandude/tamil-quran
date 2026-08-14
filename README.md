@@ -11,12 +11,10 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3000. Fonts (Amiri Quran, Noto Serif Tamil, Fraunces,
-Inter) load from Google Fonts at build time via `next/font/google` — this
-requires normal internet access, which your machine/host has (this was built
-in a sandboxed environment without access to fonts.googleapis.com, so the
-font fetch itself was verified separately; everything else was built and
-smoke-tested end to end).
+Open http://localhost:3000. The Tamil reading font is bundled locally for
+reliable deployment; the Arabic and Latin display/UI fonts load from Google
+Fonts at build time via `next/font/google`, so a normal internet connection is
+required when building.
 
 ```bash
 npm run build   # production build, statically generates all 114 Surah pages
