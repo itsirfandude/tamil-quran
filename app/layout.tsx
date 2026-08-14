@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Amiri_Quran, Noto_Serif_Tamil, Fraunces, Inter } from "next/font/google";
+import { Amiri_Quran, Fraunces, Inter } from "next/font/google";
+import localFont from "next/font/local";
 import { SiteHeader } from "@/components/SiteHeader";
 import "./globals.css";
 import { PrefsProvider } from "@/components/PrefsProvider";
@@ -13,10 +14,10 @@ const arabicFont = Amiri_Quran({
   display: "swap",
 });
 
-const tamilFont = Noto_Serif_Tamil({
+const tamilFont = localFont({
+  src: "./fonts/noto-serif-tamil.woff2",
   variable: "--font-tamil",
-  subsets: ["tamil"],
-  weight: ["400", "500", "600", "700"],
+  weight: "100 900",
   display: "swap",
 });
 
