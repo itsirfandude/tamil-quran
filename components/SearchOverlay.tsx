@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { OfflineReferenceLink } from "./OfflineReferenceLink";
 import type { VerseResult, SearchResult } from "@/lib/search";
 import {
   parseVerseReference,
@@ -301,7 +302,7 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
           )}
 
           {verseRef && !currentReferenceLoading && displayedReference && (
-            <a
+            <OfflineReferenceLink
               href={displayedReference.href}
               onClick={onClose}
               className="block border-b px-4 py-3 transition-colors hover:bg-black/5"
@@ -322,7 +323,7 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
                   {displayedReference.preview}
                 </p>
               )}
-            </a>
+            </OfflineReferenceLink>
           )}
 
           {verseRef && !currentReferenceLoading && !displayedReference && (

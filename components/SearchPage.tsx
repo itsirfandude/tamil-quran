@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { VerseBadge } from "./VerseBadge";
+import { OfflineReferenceLink } from "./OfflineReferenceLink";
 import type {
   SearchResult,
   SurahResult,
@@ -185,7 +186,7 @@ function resultKey(result: SearchResult): string {
 function ReferenceCard({ reference }: { reference: ResolvedVerseReference }) {
   return (
     <li>
-      <a
+      <OfflineReferenceLink
         href={reference.href}
         className="ink-card flex items-start gap-3 rounded-xl px-4 py-3.5"
       >
@@ -203,7 +204,7 @@ function ReferenceCard({ reference }: { reference: ResolvedVerseReference }) {
             {reference.preview}
           </span>
         </span>
-      </a>
+      </OfflineReferenceLink>
     </li>
   );
 }
