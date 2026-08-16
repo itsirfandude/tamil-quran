@@ -127,7 +127,7 @@ export function SettingsPanel({ onClose }: { onClose: () => void }) {
         </div>
       </fieldset>
 
-      <fieldset>
+      <fieldset className="hidden sm:block">
         <legend className="text-xs uppercase tracking-wider mb-2" style={{ color: "var(--text-muted)" }}>
           Reading width
         </legend>

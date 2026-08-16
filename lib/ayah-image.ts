@@ -267,6 +267,7 @@ export async function generateAyahImage(input: AyahImageInput) {
   let y = 390;
   ctx.fillStyle = theme.text;
   ctx.direction = "rtl";
+  ctx.textAlign = "center";
   ctx.font = `${layout.arabicSize}px ${arabicFamily}`;
   for (const line of layout.arabicLines) {
     ctx.fillText(line, 540, y);
