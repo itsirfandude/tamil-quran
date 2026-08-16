@@ -301,7 +301,7 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
           )}
 
           {verseRef && !currentReferenceLoading && displayedReference && (
-            <Link
+            <a
               href={displayedReference.href}
               onClick={onClose}
               className="block border-b px-4 py-3 transition-colors hover:bg-black/5"
@@ -322,7 +322,7 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
                   {displayedReference.preview}
                 </p>
               )}
-            </Link>
+            </a>
           )}
 
           {verseRef && !currentReferenceLoading && !displayedReference && (

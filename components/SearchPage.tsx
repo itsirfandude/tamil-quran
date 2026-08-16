@@ -184,22 +184,27 @@ function resultKey(result: SearchResult): string {
 
 function ReferenceCard({ reference }: { reference: ResolvedVerseReference }) {
   return (
-    <CardShell href={reference.href}>
-      <span aria-hidden="true" className="text-lg leading-none mt-0.5">
-        📍
-      </span>
-      <span className="min-w-0 flex-1">
-        <span className="block text-xs mb-1" style={{ color: "var(--accent-2)" }}>
-          {reference.label} · Jump to verse
+    <li>
+      <a
+        href={reference.href}
+        className="ink-card flex items-start gap-3 rounded-xl px-4 py-3.5"
+      >
+        <span aria-hidden="true" className="text-lg leading-none mt-0.5">
+          📍
         </span>
-        <span
-          className="font-tamil-text block text-sm leading-relaxed"
-          style={{ color: "var(--text)" }}
-        >
-          {reference.preview}
+        <span className="min-w-0 flex-1">
+          <span className="block text-xs mb-1" style={{ color: "var(--accent-2)" }}>
+            {reference.label} · Jump to verse
+          </span>
+          <span
+            className="font-tamil-text block text-sm leading-relaxed"
+            style={{ color: "var(--text)" }}
+          >
+            {reference.preview}
+          </span>
         </span>
-      </span>
-    </CardShell>
+      </a>
+    </li>
   );
 }
 
