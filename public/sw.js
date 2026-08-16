@@ -1,6 +1,7 @@
-const CACHE_VERSION = "quran-v1";
+const CACHE_VERSION = "quran-v2";
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
+const CURRENT_CACHES = new Set([STATIC_CACHE, RUNTIME_CACHE]);
 
 const CORE_URLS = [
   "/",
@@ -37,18 +38,25 @@ const PRECACHE_URLS = [...CORE_URLS, ...READING_ROUTE_URLS, ...DATA_URLS];
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(STATIC_CACHE).then(async (cache) => {
-      // Cache each item independently so one unavailable route cannot prevent
-      // the worker from installing. Runtime requests fill any missed entries.
-      await Promise.all(
-        PRECACHE_URLS.map(async (url) => {
-          try {
+      try {
+        const results = await Promise.allSettled(
+          PRECACHE_URLS.map(async (url) => {
             const response = await fetch(url, { cache: "no-cache" });
-            if (response.ok) await cache.put(url, response);
-          } catch {
-            // The runtime strategy will retry this resource later.
-          }
-        }),
-      );
+            if (!response.ok) {
+              throw new Error(`Failed to precache ${url}: ${response.status}`);
+            }
+            await cache.put(url, response);
+          }),
+        );
+
+        const failure = results.find((result) => result.status === "rejected");
+        if (failure?.status === "rejected") throw failure.reason;
+      } catch (error) {
+        // Do not allow a partially populated release cache to activate and
+        // delete the previous release's complete offline cache.
+        await caches.delete(STATIC_CACHE);
+        throw error;
+      }
     }),
   );
 });
@@ -58,7 +66,7 @@ self.addEventListener("activate", (event) => {
     caches.keys().then((keys) =>
       Promise.all(
         keys
-          .filter((key) => key.startsWith("quran-") && ![STATIC_CACHE, RUNTIME_CACHE].includes(key))
+          .filter((key) => key.startsWith("quran-") && !CURRENT_CACHES.has(key))
           .map((key) => caches.delete(key)),
       ),
     ),
