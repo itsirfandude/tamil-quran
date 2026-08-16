@@ -14,13 +14,18 @@ interface SurahJumpResult {
   label: string;
 }
 
+interface ReferenceState {
+  key: string;
+  value: ResolvedVerseReference | null;
+}
+
 export function SearchOverlay({ onClose }: { onClose: () => void }) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<VerseResult[]>([]);
   const [loading, setLoading] = useState(false);
-  const [reference, setReference] =
-    useState<ResolvedVerseReference | null>(null);
+  const [reference, setReference] = useState<ReferenceState | null>(null);
   const [referenceLoading, setReferenceLoading] = useState(false);
+  const referenceRequestId = useRef(0);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -57,6 +62,7 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
 
   const bareSurah = /^(\d{1,3})$/.exec(trimmed);
   const verseRef = parseVerseReference(trimmed);
+  const referenceKey = verseRef ? `${verseRef.surah}:${verseRef.verse}` : null;
 
   const bareSurahValid =
     bareSurah &&
@@ -121,6 +127,8 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
   }, [trimmed, !!bareSurah, !!verseRef]);
 
   useEffect(() => {
+    const requestId = ++referenceRequestId.current;
+
     if (!verseRef) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setReference(null);
@@ -135,13 +143,15 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
     }
 
     const controller = new AbortController();
+    const key = `${verseRef.surah}:${verseRef.verse}`;
 
     setReferenceLoading(true);
     setReference(null);
 
     fetchVerseReference(verseRef, { signal: controller.signal })
       .then((resolved) => {
-        setReference(resolved);
+        if (requestId !== referenceRequestId.current) return;
+        setReference({ key, value: resolved });
         setReferenceLoading(false);
       })
       .catch((error: unknown) => {
@@ -152,6 +162,8 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
           return;
         }
 
+        if (requestId !== referenceRequestId.current) return;
+
         setReference(null);
         setReferenceLoading(false);
       });
@@ -160,6 +172,14 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [verseRef?.surah, verseRef?.verse]);
+
+  const displayedReference =
+    reference?.key === referenceKey ? reference.value : null;
+  const currentReferenceLoading =
+    Boolean(verseRef &&
+      verseRef.surah >= 1 &&
+      verseRef.surah <= 114 &&
+      (referenceLoading || reference?.key !== referenceKey));
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -271,7 +291,7 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
             </Link>
           )}
 
-          {verseRef && referenceLoading && (
+          {verseRef && currentReferenceLoading && (
             <p
               className="p-6 text-sm"
               style={{ color: "var(--text-muted)" }}
@@ -280,9 +300,9 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
             </p>
           )}
 
-          {verseRef && !referenceLoading && reference && (
+          {verseRef && !currentReferenceLoading && displayedReference && (
             <Link
-              href={reference.href}
+              href={displayedReference.href}
               onClick={onClose}
               className="block border-b px-4 py-3 transition-colors hover:bg-black/5"
               style={{ borderColor: "var(--border)" }}
@@ -291,21 +311,21 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
                 className="mb-1 text-xs"
                 style={{ color: "var(--accent-2)" }}
               >
-                {reference.label} · Jump to verse
+                {displayedReference.label} · Jump to verse
               </div>
 
-              {reference.preview && (
+              {displayedReference.preview && (
                 <p
                   className="font-tamil-text text-sm leading-relaxed"
                   style={{ color: "var(--text)" }}
                 >
-                  {reference.preview}
+                  {displayedReference.preview}
                 </p>
               )}
             </Link>
           )}
 
-          {verseRef && !referenceLoading && !reference && (
+          {verseRef && !currentReferenceLoading && !displayedReference && (
             <p
               className="p-6 text-sm"
               style={{ color: "var(--text-muted)" }}

@@ -16,6 +16,11 @@ import {
   type ResolvedVerseReference,
 } from "@/lib/reference-search";
 
+interface ReferenceState {
+  key: string;
+  value: ResolvedVerseReference | null;
+}
+
 const DEBOUNCE_MS = 200;
 
 /** Wraps the first occurrence of `query` within an already-truncated
@@ -241,8 +246,9 @@ export function SearchPage() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
-  const [reference, setReference] = useState<ResolvedVerseReference | null>(null);
+  const [reference, setReference] = useState<ReferenceState | null>(null);
   const [referenceLoading, setReferenceLoading] = useState(false);
+  const referenceRequestId = useRef(0);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -255,6 +261,7 @@ export function SearchPage() {
   // search entirely and jumps straight to the verse, exactly as
   // SearchOverlay already does for the same pattern.
   const verseRef = parseVerseReference(trimmed);
+  const referenceKey = verseRef ? `${verseRef.surah}:${verseRef.verse}` : null;
 
   useEffect(() => {
     if (verseRef) {
@@ -293,34 +300,50 @@ export function SearchPage() {
   }, [trimmed, !!verseRef]);
 
   useEffect(() => {
+    const requestId = ++referenceRequestId.current;
+
     if (!verseRef) {
-      return; // render gates on verseRef before reading reference/referenceLoading
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setReference(null);
+      setReferenceLoading(false);
+      return;
     }
     if (verseRef.surah < 1 || verseRef.surah > 114) {
-      // The invalid-reference branch clears stale async state before rendering.
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setReference(null);
       setReferenceLoading(false);
       return;
     }
 
     const controller = new AbortController();
+    const key = `${verseRef.surah}:${verseRef.verse}`;
     setReferenceLoading(true);
     setReference(null);
 
     fetchVerseReference(verseRef, { signal: controller.signal })
       .then((resolved) => {
-        setReference(resolved);
+        if (requestId !== referenceRequestId.current) return;
+        setReference({ key, value: resolved });
         setReferenceLoading(false);
       })
       .catch((error: unknown) => {
         if (error instanceof DOMException && error.name === "AbortError") return;
+        if (requestId !== referenceRequestId.current) return;
         setReference(null);
         setReferenceLoading(false);
       });
 
     return () => controller.abort();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [verseRef?.surah, verseRef?.verse]);
+
+  const displayedReference =
+    reference?.key === referenceKey ? reference.value : null;
+  const currentReferenceLoading =
+    Boolean(verseRef &&
+      verseRef.surah >= 1 &&
+      verseRef.surah <= 114 &&
+      (referenceLoading || reference?.key !== referenceKey));
 
   return (
     <div className="mx-auto max-w-2xl px-4 sm:px-6">
@@ -347,13 +370,13 @@ export function SearchPage() {
       <div>
         {!trimmed && <EmptyState />}
 
-        {verseRef && referenceLoading && <LoadingState />}
-        {verseRef && !referenceLoading && reference && (
+        {verseRef && currentReferenceLoading && <LoadingState />}
+        {verseRef && !currentReferenceLoading && displayedReference && (
           <ul className="space-y-3" aria-label="Search results">
-            <ReferenceCard reference={reference} />
+            <ReferenceCard reference={displayedReference} />
           </ul>
         )}
-        {verseRef && !referenceLoading && !reference && (
+        {verseRef && !currentReferenceLoading && !displayedReference && (
           <NoResultsState query={trimmed} />
         )}
 

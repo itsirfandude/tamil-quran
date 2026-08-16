@@ -5,6 +5,7 @@ import { AyahCard } from "@/components/AyahCard";
 import { SurahIntro } from "@/components/SurahIntro";
 import { ReaderProgressTracker } from "@/components/ReaderProgressTracker";
 import { ReadingWidthWrapper } from "@/components/ReadingWidthWrapper";
+import { LongPageNavigation } from "@/components/LongPageNavigation";
 import { getSurah, getSurahIndex, TOTAL_SURAHS } from "@/lib/data";
 
 export async function generateStaticParams() {
@@ -113,6 +114,7 @@ export default async function SurahPage({
           </nav>
         </ReadingWidthWrapper>
       </main>
+      <LongPageNavigation />
       <ReaderProgressTracker surah={surah.number} groups={surah.ayah_groups} />
     </>
   );

@@ -259,7 +259,10 @@ export async function generateAyahImage(input: AyahImageInput) {
   ctx.direction = "ltr";
   ctx.fillStyle = theme.muted;
   ctx.font = `500 25px ${uiFamily}`;
-  ctx.fillText("திருக்குர்ஆன் · QURAN", 540, 142);
+  const headerText = "திருக்குர்ஆன் · QURAN";
+  const headerWidth = ctx.measureText(headerText).width;
+  ctx.textAlign = "left";
+  ctx.fillText(headerText, (AYAH_IMAGE_WIDTH - headerWidth) / 2, 142);
 
   let y = 390;
   ctx.fillStyle = theme.text;
@@ -291,8 +294,10 @@ export async function generateAyahImage(input: AyahImageInput) {
   ctx.fillRect(350, footerY - 52, 380, 2);
   ctx.fillStyle = theme.text;
   ctx.font = `600 29px ${uiFamily}`;
-  ctx.textAlign = "center";
-  ctx.fillText(`${input.surahName} · ${input.surah}:${verseLabel}`, 540, footerY);
+  const footerText = `${input.surahName} · ${input.surah}:${verseLabel}`;
+  const footerWidth = ctx.measureText(footerText).width;
+  ctx.textAlign = "left";
+  ctx.fillText(footerText, (AYAH_IMAGE_WIDTH - footerWidth) / 2, footerY);
 
   const blob = await new Promise<Blob | null>((resolve) =>
     canvas.toBlob(resolve, "image/png"),

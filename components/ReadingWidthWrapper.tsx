@@ -23,8 +23,14 @@ export function ReadingWidthWrapper({
   const { prefs } = usePrefs();
   const baseRem = WIDTHS[prefs.readingWidth];
   const rem = widen ? baseRem * WIDEN_FACTOR : baseRem;
+  const mobilePadding =
+    prefs.readingWidth === "narrow"
+      ? "px-6"
+      : prefs.readingWidth === "wide"
+        ? "px-2"
+        : "px-4";
   return (
-    <div className="mx-auto px-4 sm:px-6" style={{ maxWidth: `${rem}rem` }}>
+    <div className={`mx-auto ${mobilePadding} sm:px-6`} style={{ maxWidth: `${rem}rem` }}>
       {children}
     </div>
   );
