@@ -226,7 +226,7 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="தமிழில் தேடுக..."
-            className="flex-1 bg-transparent font-tamil-text text-base outline-none"
+            className="flex-1 bg-transparent font-tamil-text text-base leading-[1.35] outline-none"
             style={{
               color: "var(--text)",
               fontSize: "17px",

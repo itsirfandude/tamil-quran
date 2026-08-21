@@ -91,7 +91,7 @@ function VerseCard({ result, query }: { result: VerseResult; query: string }) {
       <span className="min-w-0 flex-1">
         <span className="flex items-baseline gap-1.5 mb-1">
           <VerseBadge verses={result.verses} />
-          <span className="text-sm" style={{ color: "var(--text)" }}>
+          <span className="min-w-0 text-sm" style={{ color: "var(--text)" }}>
             {result.surahName} · {result.label}
           </span>
         </span>
@@ -366,7 +366,7 @@ export function SearchPage() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="தமிழில் தேடுக..."
-            className="flex-1 bg-transparent outline-none font-tamil-text"
+            className="flex-1 bg-transparent outline-none font-tamil-text leading-[1.35]"
             style={{ color: "var(--text)", fontSize: "17px" }}
             autoComplete="off"
           />
