@@ -3,10 +3,7 @@
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { usePrefs } from "./PrefsProvider";
 
-const MAX_ATTEMPTS = 10;
-const MAX_CORRECTIONS = 2;
 const POSITION_TOLERANCE = 32;
-const MANUAL_SCROLL_TOLERANCE = 64;
 
 function hashId(): string | null {
   const rawHash = window.location.hash.slice(1);
@@ -46,58 +43,35 @@ function isPositioned(element: HTMLElement): boolean {
 export function SurahHashScroll() {
   const { prefs } = usePrefs();
   const activeHashRef = useRef<string | null>(null);
-  const lastPositionedScrollYRef = useRef<number | null>(null);
+  const correctionAllowedRef = useRef(false);
+  const targetPositionedRef = useRef(false);
+  const positioningRef = useRef(false);
   const generationRef = useRef(0);
 
   function cancelPending() {
     generationRef.current += 1;
   }
 
-  function positionHashTarget(id: string) {
+  function positionHashTarget(id: string, waitForFonts = true) {
+    if (!correctionAllowedRef.current) return;
+
     const generation = ++generationRef.current;
-    let attempts = 0;
-    let corrections = 0;
-    let frame = 0;
-    let delayedRetry = 0;
-    let finished = false;
+    const target = findAyah(id);
+    if (!target) return;
 
-    const finish = () => {
-      if (finished) return;
-      finished = true;
-      cancelAnimationFrame(frame);
-      window.clearTimeout(delayedRetry);
-    };
+    if (!isPositioned(target)) {
+      positioningRef.current = true;
+      target.scrollIntoView({ block: "start", behavior: "auto" });
+      positioningRef.current = false;
+    }
+    targetPositionedRef.current = isPositioned(target);
 
-    const attempt = () => {
-      if (finished || generationRef.current !== generation) return;
-      attempts += 1;
-
-      const target = findAyah(id);
-      if (target && isPositioned(target)) {
-        lastPositionedScrollYRef.current = window.scrollY;
-        finish();
-        return;
-      }
-
-      if (target && corrections < MAX_CORRECTIONS) {
-        target.scrollIntoView({ block: "start", behavior: "auto" });
-        corrections += 1;
-      }
-
-      if (attempts >= MAX_ATTEMPTS) {
-        finish();
-        return;
-      }
-
-      frame = requestAnimationFrame(attempt);
-    };
-
-    frame = requestAnimationFrame(attempt);
-    delayedRetry = window.setTimeout(attempt, 180);
-
-    if (document.fonts?.ready) {
+    if (waitForFonts && document.fonts?.ready) {
       document.fonts.ready.then(() => {
-        if (!finished && generationRef.current === generation) attempt();
+        if (generationRef.current !== generation) return;
+        if (!correctionAllowedRef.current) return;
+        targetPositionedRef.current = false;
+        positionHashTarget(id, false);
       });
     }
   }
@@ -107,33 +81,50 @@ export function SurahHashScroll() {
       const id = hashId();
       cancelPending();
       activeHashRef.current = id;
-      lastPositionedScrollYRef.current = null;
+      correctionAllowedRef.current = Boolean(id);
+      targetPositionedRef.current = false;
       if (id) positionHashTarget(id);
+    };
+
+    const handleScroll = () => {
+      if (
+        positioningRef.current ||
+        !correctionAllowedRef.current ||
+        !targetPositionedRef.current
+      ) {
+        return;
+      }
+
+      const id = activeHashRef.current;
+      const target = id ? findAyah(id) : null;
+      if (!target || !isPositioned(target)) {
+        // The hash remains in the URL after a reader intentionally scrolls
+        // away. Target geometry, not scrollY, determines whether width
+        // changes may restore the old hash position.
+        correctionAllowedRef.current = false;
+        targetPositionedRef.current = false;
+      }
     };
 
     activateCurrentHash();
     window.addEventListener("hashchange", activateCurrentHash);
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
       window.removeEventListener("hashchange", activateCurrentHash);
+      window.removeEventListener("scroll", handleScroll);
+      correctionAllowedRef.current = false;
+      targetPositionedRef.current = false;
       cancelPending();
     };
   }, []);
 
   useLayoutEffect(() => {
     const id = activeHashRef.current;
-    const lastPositionedScrollY = lastPositionedScrollYRef.current;
-    if (!id || lastPositionedScrollY === null || hashId() !== id) return;
-
-    const scrollDelta = Math.abs(window.scrollY - lastPositionedScrollY);
-    if (scrollDelta > MANUAL_SCROLL_TOLERANCE) {
-      // The reader moved away from the hash target. Disarm width correction
-      // until a new intentional hash navigation occurs.
-      lastPositionedScrollYRef.current = null;
-      return;
+    if (id && hashId() === id && correctionAllowedRef.current) {
+      targetPositionedRef.current = false;
+      positionHashTarget(id);
     }
-
-    positionHashTarget(id);
   }, [prefs.readingWidth]);
 
   return null;

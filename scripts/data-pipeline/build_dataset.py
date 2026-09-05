@@ -19,17 +19,21 @@ arabic = json.load(open('arabic_quran.json', encoding='utf-8'))
 arabic_by_surah = {s['id']: s['verses'] for s in arabic}
 arabic_totals = {s['id']: s['total_verses'] for s in arabic}
 
-# Footnote markers: a run of digits immediately glued (no space) to the
-# preceding Tamil letter or closing punctuation - the convention this
+# Footnote markers: normally a run of digits immediately glued (no space) to
+# the preceding Tamil letter or closing punctuation - the convention this
 # translation uses for its numbered explanatory notes (1-521, see the
-# "விளக்கங்கள்" appendix). A genuine quantity in the translation always has
-# a space before it, so this pattern is safe. The source also sometimes
+# "விளக்கங்கள்" appendix). The source also has a small class of markers
+# separated by whitespace at the very end of a verse. That form is limited to
+# a terminal number after sentence/closing punctuation, so ordinary numbers
+# in prose or verse/reference text are not treated as notes. The source also
+# sometimes
 # cites two notes together joined by '&' (e.g. "26&475" = see notes 26
 # and 475) with no space either side - handled as its own alternative so
 # both numbers are captured as separate references.
 footnote_re = re.compile(
     r'(?<=[\u0B80-\u0BFF.,!?;\'")])(\d{1,4})\s?&\s?(\d{1,4})(?=[\s.,!?;\'")]|$)'
     r'|(?<=[\u0B80-\u0BFF.,!?;\'")])(\d{1,4})(?=[\s.,!?;\'")]|$)'
+    r'|(?<=[.,!?;\'")])\s+(\d{1,4})$'
 )
 
 VALID_NOTE_MAX = 521
@@ -44,7 +48,8 @@ def split_footnotes(vtext):
                 notes_found.extend([a, b])
                 return f'\u00a4{a}\u00a4\u00a4{b}\u00a4'
             return m.group(0)
-        n = int(m.group(3))
+        marker = m.group(3) or m.group(4)  # glued or terminal space-separated
+        n = int(marker)
         if 1 <= n <= VALID_NOTE_MAX:
             notes_found.append(n)
             return f'\u00a4{n}\u00a4'

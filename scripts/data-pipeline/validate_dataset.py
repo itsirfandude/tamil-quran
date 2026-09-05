@@ -28,11 +28,15 @@ glossary_pos = SRC.find('# விளக்கங்கள் அட்டவண�
 total_pattern = re.compile(r'(மொத்த|மாத்த)\s*வசனங்கள்\s*:\s*(\d+)')
 
 # --- independent footnote detector: two separate passes, not one regex ---
+# The terminal separated form is intentionally constrained to whitespace
+# after sentence/closing punctuation and the end of a verse, matching the
+# builder.
 PAIR_RE = re.compile(
     r'(?<=[\u0B80-\u0BFF.,!?;\'")])(\d{1,4})\s?&\s?(\d{1,4})(?=[\s.,!?;\'")]|$)'
 )
 SINGLE_RE = re.compile(
     r'(?<=[\u0B80-\u0BFF.,!?;\'")])(\d{1,4})(?=[\s.,!?;\'")]|$)'
+    r'|(?<=[.,!?;\'")])\s+(\d{1,4})$'
 )
 
 def independent_extract_notes(raw_verse_text):
@@ -48,7 +52,7 @@ def independent_extract_notes(raw_verse_text):
     for m in SINGLE_RE.finditer(raw_verse_text):
         if any(s <= m.start() < e for s, e in consumed):
             continue  # already claimed by a pair match
-        n = int(m.group(1))
+        n = int(m.group(1) or m.group(2))
         if n in VALID_NOTES:
             notes.append((m.start(), n))
     notes.sort(key=lambda x: x[0])
