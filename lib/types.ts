@@ -89,3 +89,58 @@ export interface ReadingProgress {
   verses: number[];
   updatedAt: number;
 }
+
+export interface HadithCollection {
+  slug: string;
+  title: {
+    latin: string;
+    tamil: string;
+  };
+  stated_description?: string;
+  stated_total?: number;
+  source?: {
+    url: string;
+    attribution?: string;
+    retrieved_at?: string;
+    copyright_notice?: string;
+  };
+}
+
+export interface HadithIndexEntry {
+  number: number;
+  primary_reference?: string;
+  source_url?: string;
+  collection_page_status?: string;
+}
+
+export interface HadithReference {
+  label: string;
+  url: string;
+}
+
+export interface HadithRecord {
+  collection_slug: string;
+  number: number;
+  references: HadithReference[];
+  primary_source_reference?: string;
+  tamil: { blocks: string[] };
+  arabic: {
+    text_blocks?: string[];
+    chapter_blocks?: string[];
+    isnad_blocks?: string[];
+  };
+  source_context?: {
+    chapter_blocks?: string[];
+    narrator_blocks?: string[];
+    source_reference_blocks?: string[];
+    additional_note_blocks?: string[];
+    cross_reference_blocks?: string[];
+  };
+  collection_page_status?: string;
+  provenance?: {
+    source_url?: string;
+    collection_url?: string;
+    retrieved_at?: string;
+  };
+  source_membership_label?: string;
+}

@@ -1,0 +1,38 @@
+{
+  "retrieved_at": "2026-09-15T09:51:45+00:00",
+  "records_requested": 50,
+  "records_extracted": 50,
+  "failures": [],
+  "representative_records": [
+    {
+      "number": 1,
+      "tamil_blocks": 7,
+      "arabic_main_blocks": 1,
+      "source_url": "https://tamil.quranandhadis.com/bukhari-1/"
+    },
+    {
+      "number": 10,
+      "tamil_blocks": 3,
+      "arabic_main_blocks": 1,
+      "source_url": "https://tamil.quranandhadis.com/muslim-1844/"
+    },
+    {
+      "number": 23,
+      "tamil_blocks": 8,
+      "arabic_main_blocks": 1,
+      "source_url": "https://tamil.quranandhadis.com/muslim-381/"
+    },
+    {
+      "number": 42,
+      "tamil_blocks": 7,
+      "arabic_main_blocks": 1,
+      "source_url": "https://tamil.quranandhadis.com/tirmidhi-3540/"
+    },
+    {
+      "number": 50,
+      "tamil_blocks": 2,
+      "arabic_main_blocks": 2,
+      "source_url": "https://tamil.quranandhadis.com/musnad-ahmad-17680/"
+    }
+  ]
+}

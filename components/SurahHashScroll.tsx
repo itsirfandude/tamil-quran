@@ -3,8 +3,6 @@
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { usePrefs } from "./PrefsProvider";
 
-const POSITION_TOLERANCE = 32;
-
 function hashId(): string | null {
   const rawHash = window.location.hash.slice(1);
   if (!rawHash) return null;
@@ -28,103 +26,69 @@ function findAyah(id: string): HTMLElement | null {
   return element;
 }
 
-function expectedTop(element: HTMLElement): number {
-  const scrollMarginTop = parseFloat(
-    window.getComputedStyle(element).scrollMarginTop,
-  );
-  return Number.isFinite(scrollMarginTop) ? scrollMarginTop : 0;
+type ReadingAnchor = {
+  element: HTMLElement;
+  top: number;
+};
+
+function currentReadingAnchor(): ReadingAnchor | null {
+  const y = window.innerHeight * 0.35;
+  const element = document
+    .elementFromPoint(window.innerWidth / 2, y)
+    ?.closest<HTMLElement>("main#main article[data-verses]");
+  if (!element) return null;
+
+  return { element, top: element.getBoundingClientRect().top };
 }
 
-function isPositioned(element: HTMLElement): boolean {
-  return Math.abs(element.getBoundingClientRect().top - expectedTop(element)) <=
-    POSITION_TOLERANCE;
+function positionHashTarget(id: string) {
+  const target = findAyah(id);
+  if (!target) return;
+
+  target.scrollIntoView({ block: "start", behavior: "instant" });
 }
 
 export function SurahHashScroll() {
   const { prefs } = usePrefs();
-  const activeHashRef = useRef<string | null>(null);
-  const correctionAllowedRef = useRef(false);
-  const targetPositionedRef = useRef(false);
-  const positioningRef = useRef(false);
-  const generationRef = useRef(0);
-
-  function cancelPending() {
-    generationRef.current += 1;
-  }
-
-  function positionHashTarget(id: string, waitForFonts = true) {
-    if (!correctionAllowedRef.current) return;
-
-    const generation = ++generationRef.current;
-    const target = findAyah(id);
-    if (!target) return;
-
-    if (!isPositioned(target)) {
-      positioningRef.current = true;
-      target.scrollIntoView({ block: "start", behavior: "auto" });
-      positioningRef.current = false;
-    }
-    targetPositionedRef.current = isPositioned(target);
-
-    if (waitForFonts && document.fonts?.ready) {
-      document.fonts.ready.then(() => {
-        if (generationRef.current !== generation) return;
-        if (!correctionAllowedRef.current) return;
-        targetPositionedRef.current = false;
-        positionHashTarget(id, false);
-      });
-    }
-  }
+  const readingAnchorRef = useRef<ReadingAnchor | null>(null);
+  const readingWidthRef = useRef(prefs.readingWidth);
 
   useEffect(() => {
     const activateCurrentHash = () => {
       const id = hashId();
-      cancelPending();
-      activeHashRef.current = id;
-      correctionAllowedRef.current = Boolean(id);
-      targetPositionedRef.current = false;
       if (id) positionHashTarget(id);
     };
 
-    const handleScroll = () => {
-      if (
-        positioningRef.current ||
-        !correctionAllowedRef.current ||
-        !targetPositionedRef.current
-      ) {
-        return;
-      }
-
-      const id = activeHashRef.current;
-      const target = id ? findAyah(id) : null;
-      if (!target || !isPositioned(target)) {
-        // The hash remains in the URL after a reader intentionally scrolls
-        // away. Target geometry, not scrollY, determines whether width
-        // changes may restore the old hash position.
-        correctionAllowedRef.current = false;
-        targetPositionedRef.current = false;
-      }
+    const captureReadingAnchor = () => {
+      const anchor = currentReadingAnchor();
+      if (anchor) readingAnchorRef.current = anchor;
     };
 
     activateCurrentHash();
+    captureReadingAnchor();
     window.addEventListener("hashchange", activateCurrentHash);
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("scroll", captureReadingAnchor, { passive: true });
 
     return () => {
       window.removeEventListener("hashchange", activateCurrentHash);
-      window.removeEventListener("scroll", handleScroll);
-      correctionAllowedRef.current = false;
-      targetPositionedRef.current = false;
-      cancelPending();
+      window.removeEventListener("scroll", captureReadingAnchor);
     };
   }, []);
 
   useLayoutEffect(() => {
-    const id = activeHashRef.current;
-    if (id && hashId() === id && correctionAllowedRef.current) {
-      targetPositionedRef.current = false;
-      positionHashTarget(id);
+    if (readingWidthRef.current === prefs.readingWidth) return;
+    readingWidthRef.current = prefs.readingWidth;
+
+    const anchor = readingAnchorRef.current;
+    if (!anchor || !anchor.element.isConnected) return;
+
+    const delta = anchor.element.getBoundingClientRect().top - anchor.top;
+    if (Math.abs(delta) > 0.5) {
+      window.scrollBy({ top: delta, left: 0, behavior: "instant" });
     }
+
+    const updatedAnchor = currentReadingAnchor();
+    if (updatedAnchor) readingAnchorRef.current = updatedAnchor;
   }, [prefs.readingWidth]);
 
   return null;

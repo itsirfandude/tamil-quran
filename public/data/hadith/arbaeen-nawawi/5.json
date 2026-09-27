@@ -1,0 +1,53 @@
+{
+  "collection_slug": "arbaeen-nawawi",
+  "number": 5,
+  "references": [
+    {
+      "label": "முஸ்லிம்-3540",
+      "url": "https://tamil.quranandhadis.com/muslim-3540/"
+    },
+    {
+      "label": "3541",
+      "url": "https://tamil.quranandhadis.com/muslim-3541/"
+    },
+    {
+      "label": "புகாரி-2697",
+      "url": "https://tamil.quranandhadis.com/bukhari-2697/"
+    }
+  ],
+  "primary_source_reference": "(புகாரி: 2697)",
+  "tamil": {
+    "blocks": [
+      "2697.\nஇறைத்தூதர்(ஸல்) அவர்கள் கூறினார்கள்:",
+      "நம்முடைய இந்த (மார்க்க) விவகாரத்தில் அதில் இல்லாததைப் புதிதாக எவன் உண்டாக்குகிறானோ அவனுடைய அந்தப் புதுமை நிராகரிக்கப்பட்டதாகும். என ஆயிஷா(ரலி) அறிவித்தார்.\nBook :53"
+    ]
+  },
+  "arabic": {
+    "text_blocks": [
+      "«مَنْ أَحْدَثَ فِي أَمْرِنَا هَذَا مَا لَيْسَ فِيهِ، فَهُوَ رَدٌّ»"
+    ],
+    "isnad_blocks": [
+      "حَدَّثَنَا يَعْقُوبُ، حَدَّثَنَا إِبْرَاهِيمُ بْنُ سَعْدٍ، عَنْ أَبِيهِ، عَنِ القَاسِمِ بْنِ مُحَمَّدٍ، عَنْ عَائِشَةَ رَضِيَ اللَّهُ عَنْهَا، قَالَتْ: قَالَ رَسُولُ اللَّهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ"
+    ],
+    "footnote_blocks": [
+      "رَوَاهُ عَبْدُ اللَّهِ بْنُ جَعْفَرٍ المَخْرَمِيُّ، وَعَبْدُ الوَاحِدِ بْنُ أَبِي عَوْنٍ، عَنْ سَعْدِ بْنِ إِبْرَاهِيمَ"
+    ]
+  },
+  "source_context": {
+    "chapter_blocks": [],
+    "narrator_blocks": [],
+    "source_reference_blocks": [
+      "(புகாரி: 2697)"
+    ],
+    "additional_note_blocks": [
+      "…"
+    ],
+    "cross_reference_blocks": []
+  },
+  "provenance": {
+    "source_url": "https://tamil.quranandhadis.com/bukhari-2697/",
+    "collection_url": "https://tamil.quranandhadis.com/%E0%AE%85%E0%AE%B2%E0%AF%8D%E0%AE%85%E0%AE%B0%E0%AF%8D%E0%AE%AA%E0%AE%88%E0%AE%A9%E0%AF%8D-%E0%AE%A8%E0%AE%B5%E0%AE%B5%E0%AF%80/",
+    "retrieved_at": "2026-09-15T09:51:45+00:00"
+  },
+  "source_membership_label": "அல்அர்பஈன்-\nநவவீ\nபிறப்பு ஹிஜ்ரி 631\nஇறப்பு ஹிஜ்ரி 676\nவயது: 45\nஎண்-5."
+}

@@ -1,0 +1,44 @@
+{
+  "collection_slug": "arbaeen-nawawi",
+  "number": 16,
+  "references": [
+    {
+      "label": "புகாரி-6116",
+      "url": "https://tamil.quranandhadis.com/bukhari-6116/"
+    }
+  ],
+  "primary_source_reference": "(புகாரி: 6116)",
+  "tamil": {
+    "blocks": [
+      "6116.\nஅபூ ஹுரைரா(ரலி) அறிவித்தார்.",
+      "ஒருவர் நபி(ஸல்) அவர்களிடம், ‘எனக்கு அறிவுரை கூறுங்கள்’ என்றார். நபி(ஸல்) அவர்கள், ‘கோபத்தைக் கைவிடு’ என்று (அறிவுரை) கூறினார்கள். அவர் (‘அறிவுரை கூறுங்கள்’ எனப்) பல முறை கேட்டபோதும் நபி(ஸல்) அவர்கள் ‘கோபத்தைக் கைவிடு’ என்றே சொன்னார்கள்."
+    ]
+  },
+  "arabic": {
+    "text_blocks": [
+      "أَنَّ رَجُلًا قَالَ لِلنَّبِيِّ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ: أَوْصِنِي، قَالَ: «لاَ تَغْضَبْ» فَرَدَّدَ مِرَارًا، قَالَ: «لاَ تَغْضَبْ»"
+    ],
+    "isnad_blocks": [
+      "حَدَّثَنِي يَحْيَى بْنُ يُوسُفَ، أَخْبَرَنَا أَبُو بَكْرٍ هُوَ ابْنُ عَيَّاشٍ، عَنْ أَبِي حَصِينٍ، عَنْ أَبِي صَالِحٍ، عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللَّهُ عَنْهُ"
+    ]
+  },
+  "source_context": {
+    "chapter_blocks": [
+      "Book :78"
+    ],
+    "narrator_blocks": [],
+    "source_reference_blocks": [
+      "(புகாரி: 6116)"
+    ],
+    "additional_note_blocks": [
+      "…"
+    ],
+    "cross_reference_blocks": []
+  },
+  "provenance": {
+    "source_url": "https://tamil.quranandhadis.com/bukhari-6116/",
+    "collection_url": "https://tamil.quranandhadis.com/%E0%AE%85%E0%AE%B2%E0%AF%8D%E0%AE%85%E0%AE%B0%E0%AF%8D%E0%AE%AA%E0%AE%88%E0%AE%A9%E0%AF%8D-%E0%AE%A8%E0%AE%B5%E0%AE%B5%E0%AF%80/",
+    "retrieved_at": "2026-09-15T09:51:45+00:00"
+  },
+  "source_membership_label": "அல்அர்பஈன்-\nநவவீ\nபிறப்பு ஹிஜ்ரி 631\nஇறப்பு ஹிஜ்ரி 676\nவயது: 45\nஎண்-16."
+}

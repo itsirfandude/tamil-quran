@@ -11,16 +11,18 @@ type NavigationItem = {
 };
 
 type MobileNavigationItem = NavigationItem & {
-  icon: "about" | "topics" | "notes" | "bookmarks";
+  icon: "about" | "topics" | "notes" | "hadith" | "bookmarks";
 };
 
 const desktopNavigationItems: NavigationItem[] = [
+  { href: "/hadith", label: "ஹதீஸ்" },
   { href: "/about", label: "அறிமுகம்" },
   { href: "/topics", label: "பொருள் அட்டவணை" },
   { href: "/notes", label: "விளக்கங்கள்" },
 ];
 
 const mobileNavigationItems: MobileNavigationItem[] = [
+  { href: "/hadith", label: "ஹதீஸ்", icon: "hadith" },
   { href: "/about", label: "அறிமுகம்", icon: "about" },
   { href: "/topics", label: "பொருள் அட்டவணை", icon: "topics" },
   { href: "/notes", label: "விளக்கங்கள்", icon: "notes" },
@@ -256,6 +258,14 @@ function MobileNavCard({
 }
 
 function MobileNavIcon({ name }: { name: MobileNavigationItem["icon"] }) {
+  if (name === "hadith") {
+    return (
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
+        <path d="M5 4.5A2.5 2.5 0 0 1 7.5 2H19v17H7.5A2.5 2.5 0 0 0 5 21.5z" />
+        <path d="M5 4.5v17M9 7h6M9 11h6M9 15h4" />
+      </svg>
+    );
+  }
   if (name === "about") {
     return (
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">

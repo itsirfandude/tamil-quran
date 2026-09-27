@@ -3,6 +3,7 @@ import { ContinueReading } from "@/components/ContinueReading";
 import { SurahGrid } from "@/components/SurahGrid";
 import { TamilWithNotes } from "@/components/TamilWithNotes";
 import { getSurah, getSurahIndex } from "@/lib/data";
+import { getHadithCollection, getHadithIndex, getHadithRecord } from "@/lib/hadith";
 
 export const revalidate = 86400;
 
@@ -26,6 +27,16 @@ export default async function HomePage() {
     dailySurah && dailySurah.ayah_groups.length > 0
       ? dailySurah.ayah_groups[doy % dailySurah.ayah_groups.length]
       : null;
+  const hadithCollection = await getHadithCollection("arbaeen-nawawi");
+  const hadithIndex = hadithCollection
+    ? await getHadithIndex(hadithCollection.slug)
+    : null;
+  const dailyHadithEntry = hadithIndex?.length
+    ? hadithIndex[doy % hadithIndex.length]
+    : null;
+  const dailyHadith = dailyHadithEntry && hadithCollection
+    ? await getHadithRecord(hadithCollection.slug, dailyHadithEntry.number)
+    : null;
 
   return (
     <>
@@ -131,6 +142,37 @@ export default async function HomePage() {
     </Link>
   </section>
 )}
+
+          {hadithCollection && (
+            <section aria-labelledby="hadith-heading">
+              <div className="mb-4 flex items-baseline justify-between gap-4">
+                <div>
+                  <p className="text-xs uppercase tracking-wider" style={{ color: "var(--accent-2)" }}>இஸ்லாமிய நூலகம்</p>
+                  <h2 id="hadith-heading" className="mt-1 font-display text-xl" style={{ color: "var(--text)" }}>ஹதீஸ்</h2>
+                </div>
+                <Link href="/hadith" className="shrink-0 text-sm" style={{ color: "var(--accent-2)" }}>
+                  {hadithCollection.stated_total ?? hadithIndex?.length ?? 0} ஹதீஸ்களைப் பார்க்க →
+                </Link>
+              </div>
+              <Link href="/hadith" className="ink-card block rounded-2xl p-6 sm:p-7">
+                <p className="font-tamil-text" style={{ fontSize: "21px", color: "var(--text)" }}>{hadithCollection.title.tamil}</p>
+                <p className="mt-2 text-sm" style={{ color: "var(--text-muted)" }}>{hadithCollection.stated_total ?? hadithIndex?.length ?? 0} ஹதீஸ்கள்</p>
+              </Link>
+              {dailyHadith && dailyHadithEntry && (
+                <Link
+                  href={`/hadith/${hadithCollection.slug}/${dailyHadithEntry.number}`}
+                  className="mt-3 block border-l-2 py-1 pl-4"
+                  style={{ borderColor: "var(--accent-2)" }}
+                >
+                  <p className="text-xs uppercase tracking-wider" style={{ color: "var(--accent-2)" }}>இன்றைய ஹதீஸ்</p>
+                  <p className="mt-1 line-clamp-2 font-tamil-text" style={{ fontSize: "17px", lineHeight: 1.65, color: "var(--text)" }}>
+                    {dailyHadith.tamil.blocks.find((block) => block.trim())}
+                  </p>
+                  <p className="mt-1 text-xs" style={{ color: "var(--text-muted)" }}>ஹதீஸ் {dailyHadithEntry.number} {dailyHadithEntry.primary_reference ? `· ${dailyHadithEntry.primary_reference}` : ""}</p>
+                </Link>
+              )}
+            </section>
+          )}
 
           <section aria-labelledby="surah-grid-heading">
             <div className="flex items-baseline justify-between mb-4">

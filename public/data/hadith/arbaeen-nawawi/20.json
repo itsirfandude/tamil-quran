@@ -1,0 +1,49 @@
+{
+  "collection_slug": "arbaeen-nawawi",
+  "number": 20,
+  "references": [
+    {
+      "label": "புகாரி-6120",
+      "url": "https://tamil.quranandhadis.com/bukhari-6120/"
+    }
+  ],
+  "primary_source_reference": "(புகாரி: 6120)",
+  "tamil": {
+    "blocks": [
+      "6120.\nஇறைத்தூதர்(ஸல்) அவர்கள் கூறினார்கள்’",
+      "மக்கள் முந்தைய இறைத்தூதர்களின் (முது) மொழிகளிலிருந்து அடைந்து கொண்ட ஒன்றுதான். ‘உனக்கு நாணம் இல்லையேல் நாடியதைச் செய்துகொள்’ என்பதும்.",
+      "என அபூ மஸ்ஊத் உக்பா இப்னு ஆமிர்(ரலி) அறிவித்தார்."
+    ]
+  },
+  "arabic": {
+    "text_blocks": [
+      "إِنَّ مِمَّا أَدْرَكَ النَّاسُ مِنْ كَلاَمِ النُّبُوَّةِ الأُولَى: إِذَا لَمْ تَسْتَحْيِ فَاصْنَعْ مَا شِئْتَ"
+    ],
+    "chapter_blocks": [
+      "بَابُ إِذَا لَمْ تَسْتَحْيِ فَاصْنَعْ مَا شِئْتَ"
+    ],
+    "isnad_blocks": [
+      "حَدَّثَنَا أَحْمَدُ بْنُ يُونُسَ، حَدَّثَنَا زُهَيْرٌ، حَدَّثَنَا مَنْصُورٌ، عَنْ رِبْعِيِّ بْنِ حِرَاشٍ، حَدَّثَنَا أَبُو مَسْعُودٍ، قَالَ: قَالَ النَّبِيُّ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ"
+    ]
+  },
+  "source_context": {
+    "chapter_blocks": [
+      "பாடம் : 78 நாணம் இல்லையேல் நாடியதைச் செய்து கொள்.",
+      "Book : 78"
+    ],
+    "narrator_blocks": [],
+    "source_reference_blocks": [
+      "(புகாரி: 6120)"
+    ],
+    "additional_note_blocks": [
+      "…"
+    ],
+    "cross_reference_blocks": []
+  },
+  "provenance": {
+    "source_url": "https://tamil.quranandhadis.com/bukhari-6120/",
+    "collection_url": "https://tamil.quranandhadis.com/%E0%AE%85%E0%AE%B2%E0%AF%8D%E0%AE%85%E0%AE%B0%E0%AF%8D%E0%AE%AA%E0%AE%88%E0%AE%A9%E0%AF%8D-%E0%AE%A8%E0%AE%B5%E0%AE%B5%E0%AF%80/",
+    "retrieved_at": "2026-09-15T09:51:45+00:00"
+  },
+  "source_membership_label": "அல்அர்பஈன்-\nநவவீ\nபிறப்பு ஹிஜ்ரி 631\nஇறப்பு ஹிஜ்ரி 676\nவயது: 45\nஎண்-20."
+}

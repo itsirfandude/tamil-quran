@@ -1,7 +1,8 @@
 import type { MetadataRoute } from "next";
 import { TOTAL_SURAHS } from "@/lib/data";
+import { getHadithIndex } from "@/lib/hadith";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = "https://example.com";
   const surahs: MetadataRoute.Sitemap = Array.from(
     { length: TOTAL_SURAHS },
@@ -11,5 +12,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     })
   );
-  return [{ url: base, changeFrequency: "daily", priority: 1 }, ...surahs];
+  const hadithIndex = await getHadithIndex("arbaeen-nawawi");
+  const hadith: MetadataRoute.Sitemap = [
+    { url: `${base}/hadith`, changeFrequency: "monthly", priority: 0.7 },
+    ...(hadithIndex ?? []).map((entry) => ({
+      url: `${base}/hadith/arbaeen-nawawi/${entry.number}`,
+      changeFrequency: "yearly" as const,
+      priority: 0.6,
+    })),
+  ];
+  return [{ url: base, changeFrequency: "daily", priority: 1 }, ...surahs, ...hadith];
 }
